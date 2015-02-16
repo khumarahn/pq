@@ -6,3 +6,5 @@ syntax: glob
 *.a
 pq
 pq.compiled
+*.o
+*.ppu

@@ -1,14 +1,16 @@
 unit Info;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, OleCtrls, SHDocVw;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs{, OleCtrls, SHDocVw};
 
 type
   TForm4 = class(TForm)
-    WebBrowser1: TWebBrowser;
+    //WebBrowser1: TWebBrowser;
   private
     { Private declarations }
   public
@@ -20,12 +22,12 @@ var
 
 implementation
 
-{$R *.dfm}
+{$R *.lfm}
 
 procedure TForm4.Go(url: String);
 begin
-  WebBrowser1.Navigate(url);
-  Show;
+  OpenUrl(url);
+  //Show;
 end;
 
-end.
+end.

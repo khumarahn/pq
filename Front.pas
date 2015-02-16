@@ -1,10 +1,13 @@
 unit Front;
+
+{$MODE Delphi}
+
 { copyright (c)2002 Eric Fredricksen all rights reserved }
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls;
 
 type
@@ -30,18 +33,18 @@ var
 
 implementation
 
-uses ShellAPI, Main, Info;
+uses Main, Info;
 
-{$R *.dfm}
+{$R *.lfm}
 
 procedure TFrontForm.HomeLinkClick(Sender: TObject);
 begin
-  ShellExecute(GetDesktopWindow(), 'open', 'http://progressquest.com/', nil, '', SW_SHOW);
+  OpenURL('http://progressquest.com/'); { *Converted from ShellExecute* }
 end;
 
 procedure TFrontForm.LogoClick(Sender: TObject);
 begin
-  ShellExecute(GetDesktopWindow(), 'open', 'http://progressquest.com/', nil, '', SW_SHOW);
+  OpenURL('http://progressquest.com/'); { *Converted from ShellExecute* }
 end;
 
 end.

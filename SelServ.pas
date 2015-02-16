@@ -1,10 +1,13 @@
 unit SelServ;
+
+{$MODE Delphi}
+
 { copyright (c)2002 Eric Fredricksen all rights reserved }
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Forms, Dialogs, StdCtrls, ExtCtrls,
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Forms, Dialogs, StdCtrls, ExtCtrls,
   ComCtrls, Controls, Classes;
 
 type
@@ -13,7 +16,7 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Panel1: TPanel;
-    Desc: TRichEdit;
+    //Desc: TRichEdit;
     Select: TButton;
     Button2: TButton;
     Descs: TListBox;
@@ -43,7 +46,7 @@ implementation
 
 uses NewGuy, Login, Main, Web;
 
-{$R *.dfm}
+{$R *.lfm}
 
 function Take(var s: String): String;
 begin
@@ -84,7 +87,7 @@ end;
 
 procedure TServerSelectForm.ServersClick(Sender: TObject);
 begin
-  Desc.Lines.Text := Descs.Items[Servers.ItemIndex];
+  //Desc.Lines.Text := Descs.Items[Servers.ItemIndex];
   AccessCode.Visible := (CurrentOpts and 8) > 0;
   AccessCodeChange(Sender);
 end;
@@ -106,7 +109,7 @@ begin
   Caption := 'Progress Quest - Select Realm';
   if path <> '' then
     Caption := Caption + ' [' + path + ']';
-  Desc.Text := 'Fetching realm list from server...';
+  //Desc.Text := 'Fetching realm list from server...';
   url := 'http://www.progressquest.com/list.php?' + RevString + '&p=' + path;
   if AccessCode.Visible then
     url := url + '&ac=' + UrlEncode(AccessCode.Text);
@@ -181,4 +184,4 @@ begin
   if Select.Enabled then SelectClick(Self);
 end;
 
-end.
+end.

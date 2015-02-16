@@ -1,0 +1,137 @@
+object ServerSelectForm: TServerSelectForm
+  Left = 506
+  Height = 381
+  Top = 319
+  Width = 490
+  Caption = 'Progress Quest - Select Realm'
+  ClientHeight = 381
+  ClientWidth = 490
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poScreenCenter
+  LCLVersion = '1.2.6.0'
+  object Label1: TLabel
+    Left = 8
+    Height = 13
+    Top = 8
+    Width = 38
+    Caption = 'Server'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 172
+    Height = 13
+    Top = 8
+    Width = 64
+    Caption = 'Description'
+    ParentColor = False
+  end
+  object Servers: TListBox
+    Left = 8
+    Height = 277
+    Top = 24
+    Width = 157
+    Anchors = [akTop, akLeft, akBottom]
+    ItemHeight = 0
+    OnClick = ServersClick
+    OnDblClick = ServersDblClick
+    ScrollWidth = 155
+    TabOrder = 0
+    TopIndex = -1
+  end
+  object Panel1: TPanel
+    Left = 172
+    Height = 277
+    Top = 24
+    Width = 302
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BevelOuter = bvLowered
+    BorderWidth = 4
+    Caption = 'Panel1'
+    TabOrder = 1
+  end
+  object Select: TButton
+    Left = 313
+    Height = 25
+    Top = 320
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Caption = '&Select'
+    Default = True
+    Enabled = False
+    OnClick = SelectClick
+    TabOrder = 2
+  end
+  object Button2: TButton
+    Left = 397
+    Height = 25
+    Top = 320
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Caption = '&Cancel'
+    ModalResult = 2
+    TabOrder = 3
+  end
+  object Descs: TListBox
+    Left = 24
+    Height = 33
+    Top = 100
+    Width = 121
+    ItemHeight = 0
+    ScrollWidth = 119
+    TabOrder = 4
+    TopIndex = -1
+    Visible = False
+  end
+  object Hosts: TListBox
+    Left = 24
+    Height = 33
+    Top = 144
+    Width = 121
+    ItemHeight = 0
+    ScrollWidth = 119
+    TabOrder = 5
+    TopIndex = -1
+    Visible = False
+  end
+  object Options: TListBox
+    Left = 24
+    Height = 33
+    Top = 56
+    Width = 121
+    ItemHeight = 0
+    ScrollWidth = 119
+    TabOrder = 6
+    TopIndex = -1
+    Visible = False
+  end
+  object AccessCode: TLabeledEdit
+    Left = 8
+    Height = 23
+    Top = 318
+    Width = 157
+    Anchors = [akLeft, akBottom]
+    EditLabel.AnchorSideLeft.Control = AccessCode
+    EditLabel.AnchorSideRight.Control = AccessCode
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = AccessCode
+    EditLabel.Left = 8
+    EditLabel.Height = 13
+    EditLabel.Top = 302
+    EditLabel.Width = 157
+    EditLabel.Caption = 'Access Code'
+    EditLabel.ParentColor = False
+    TabOrder = 7
+    Visible = False
+    OnChange = AccessCodeChange
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = Timer1Timer
+    left = 224
+    top = 76
+  end
+end

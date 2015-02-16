@@ -1,0 +1,344 @@
+object NewGuyForm: TNewGuyForm
+  Left = 1201
+  Height = 458
+  Top = 473
+  Width = 509
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Progress Quest - New Character'
+  ClientHeight = 458
+  ClientWidth = 509
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.2.6.0'
+  object Race: TRadioGroup
+    Left = 8
+    Height = 401
+    Top = 48
+    Width = 185
+    AutoFill = True
+    Caption = 'Race'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 386
+    ClientWidth = 181
+    Items.Strings = (
+      'Half Orc'
+      'Half Man'
+      'Half Halfling'
+      'Double Hobbit'
+      'Gobhobbit'
+      'Low Elf'
+      'Dung Elf'
+      'Talking Pony'
+      'Gyrognome'
+      'Lesser Dwarf'
+      'Crested Dwarf'
+      'Eel Man'
+      'Panda Man'
+      'Trans-Kobold'
+      'Enchanted Motorcycle'
+      'Will o'' the Wisp'
+      'Battle-Finch'
+      'Double Wookiee'
+      'Skraeling'
+      'Demicanadian'
+      'Land Squid'
+    )
+    TabOrder = 0
+  end
+  object Klass: TRadioGroup
+    Left = 200
+    Height = 365
+    Top = 48
+    Width = 185
+    AutoFill = True
+    Caption = 'Class'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 350
+    ClientWidth = 181
+    Items.Strings = (
+      'Ur-Paladin'
+      'Voodoo Princess'
+      'Robot Monk'
+      'Mu-Fu Monk'
+      'Mage Illusioner'
+      'Shiv-Knight'
+      'Inner Mason'
+      'Fighter/Organist'
+      'Puma Burgular'
+      'Runeloremaster'
+      'Hunter Strangler'
+      'Battle-Felon'
+      'Tickle-Mimic'
+      'Slow Poisoner'
+      'Bastard Lunatic'
+      'Jungle Clown'
+      'Birdrider'
+      'Vermineer'
+    )
+    TabOrder = 1
+  end
+  object GroupBox1: TGroupBox
+    Left = 392
+    Height = 365
+    Top = 48
+    Width = 109
+    Caption = 'Stats'
+    ClientHeight = 350
+    ClientWidth = 105
+    TabOrder = 2
+    object Label3: TLabel
+      Left = 20
+      Height = 13
+      Top = 46
+      Width = 25
+      Caption = 'CON'
+      ParentColor = False
+    end
+    object Label7: TLabel
+      Left = 20
+      Height = 13
+      Top = 142
+      Width = 23
+      Caption = 'CHA'
+      ParentColor = False
+    end
+    object Label6: TLabel
+      Left = 20
+      Height = 13
+      Top = 118
+      Width = 20
+      Caption = 'WIS'
+      ParentColor = False
+    end
+    object Label5: TLabel
+      Left = 20
+      Height = 13
+      Top = 94
+      Width = 18
+      Caption = 'INT'
+      ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 20
+      Height = 13
+      Top = 70
+      Width = 22
+      Caption = 'DEX'
+      ParentColor = False
+    end
+    object Label2: TLabel
+      Left = 20
+      Height = 13
+      Top = 22
+      Width = 22
+      Caption = 'STR'
+      ParentColor = False
+    end
+    object Label8: TLabel
+      Left = 20
+      Height = 13
+      Top = 190
+      Width = 26
+      Caption = 'Total'
+      ParentColor = False
+    end
+    object CHA: TPanel
+      Left = 50
+      Height = 21
+      Top = 138
+      Width = 37
+      BevelOuter = bvLowered
+      Caption = '18'
+      TabOrder = 0
+    end
+    object WIS: TPanel
+      Left = 50
+      Height = 21
+      Top = 114
+      Width = 37
+      BevelOuter = bvLowered
+      Caption = '18'
+      TabOrder = 1
+    end
+    object INT: TPanel
+      Left = 50
+      Height = 21
+      Top = 90
+      Width = 37
+      BevelOuter = bvLowered
+      Caption = '18'
+      TabOrder = 2
+    end
+    object DEX: TPanel
+      Left = 50
+      Height = 21
+      Top = 66
+      Width = 37
+      BevelOuter = bvLowered
+      Caption = '18'
+      TabOrder = 3
+    end
+    object CON: TPanel
+      Left = 50
+      Height = 21
+      Top = 42
+      Width = 37
+      BevelOuter = bvLowered
+      Caption = '18'
+      TabOrder = 4
+    end
+    object STR: TPanel
+      Left = 50
+      Height = 21
+      Top = 18
+      Width = 37
+      BevelOuter = bvLowered
+      Caption = '18'
+      TabOrder = 5
+    end
+    object Reroll: TButton
+      Left = 16
+      Height = 25
+      Top = 270
+      Width = 75
+      Caption = 'Roll'
+      OnClick = RerollClick
+      TabOrder = 6
+    end
+    object Total: TPanel
+      Left = 50
+      Height = 21
+      Top = 186
+      Width = 37
+      BevelOuter = bvLowered
+      Caption = '18'
+      Color = clWhite
+      ParentColor = False
+      TabOrder = 7
+    end
+    object Unroll: TButton
+      Left = 16
+      Height = 25
+      Top = 302
+      Width = 75
+      Caption = 'Unroll'
+      Enabled = False
+      OnClick = UnrollClick
+      TabOrder = 8
+    end
+  end
+  object Sold: TButton
+    Left = 342
+    Height = 25
+    Top = 424
+    Width = 75
+    Caption = 'Sold!'
+    Default = True
+    OnClick = SoldClick
+    TabOrder = 3
+  end
+  object Name: TLabeledEdit
+    Left = 8
+    Height = 23
+    Top = 20
+    Width = 165
+    EditLabel.AnchorSideLeft.Control = Name
+    EditLabel.AnchorSideRight.Control = Name
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = Name
+    EditLabel.Left = 8
+    EditLabel.Height = 13
+    EditLabel.Top = 4
+    EditLabel.Width = 165
+    EditLabel.Caption = 'Name'
+    EditLabel.ParentColor = False
+    MaxLength = 30
+    TabOrder = 4
+  end
+  object OldRolls: TListBox
+    Left = 396
+    Height = 13
+    Top = 228
+    Width = 21
+    ItemHeight = 0
+    ScrollWidth = 19
+    TabOrder = 5
+    TopIndex = -1
+    Visible = False
+  end
+  object Button2: TButton
+    Left = 426
+    Height = 25
+    Top = 424
+    Width = 75
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 6
+  end
+  object Account: TLabeledEdit
+    Left = 200
+    Height = 23
+    Top = 20
+    Width = 185
+    EditLabel.AnchorSideLeft.Control = Account
+    EditLabel.AnchorSideRight.Control = Account
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = Account
+    EditLabel.Left = 200
+    EditLabel.Height = 13
+    EditLabel.Top = 4
+    EditLabel.Width = 185
+    EditLabel.Caption = 'Account'
+    EditLabel.ParentColor = False
+    TabOrder = 7
+    Visible = False
+  end
+  object Password: TLabeledEdit
+    Left = 392
+    Height = 23
+    Top = 20
+    Width = 109
+    EchoMode = emPassword
+    EditLabel.AnchorSideLeft.Control = Password
+    EditLabel.AnchorSideRight.Control = Password
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = Password
+    EditLabel.Left = 392
+    EditLabel.Height = 13
+    EditLabel.Top = 4
+    EditLabel.Width = 109
+    EditLabel.Caption = 'Password'
+    EditLabel.ParentColor = False
+    PasswordChar = '*'
+    TabOrder = 8
+    Visible = False
+  end
+  object Gen: TButton
+    Left = 176
+    Height = 22
+    Top = 20
+    Width = 17
+    Caption = '?'
+    OnClick = GenClick
+    TabOrder = 9
+  end
+end

@@ -1,14 +1,20 @@
 unit Config;
+
+{$MODE Delphi}
+
 { copyright (c)2002 Eric Fredricksen all rights reserved }
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls;
 
 type
-  TK = class(TForm)
+
+  { TConfigForm }
+
+  TConfigForm = class(TForm)
     Spells: TMemo;
     Label1: TLabel;
     OffenseAttrib: TMemo;
@@ -48,10 +54,12 @@ type
   end;
 
 var
-  K: TK;
+  K: TConfigForm;
 
 implementation
 
-{$R *.dfm}
+{$R *.lfm}
 
-end.
+{ TConfigForm }
+
+end.

@@ -1,11 +1,14 @@
 unit NewGuy;
+
+{$MODE Delphi}
+
 { copyright (c)2002 Eric Fredricksen all rights reserved }
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, ComCtrls, AppEvnts, NMURL;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, ComCtrls{, AppEvnts, NMURL};
 
 type
   TNewGuyForm = class(TForm)
@@ -32,16 +35,16 @@ type
     Name: TLabeledEdit;
     OldRolls: TListBox;
     Button2: TButton;
-    PoorCodeDesign: TNMURL;
+    //PoorCodeDesign: TNMURL;
     Account: TLabeledEdit;
     Password: TLabeledEdit;
-    ApplicationEvents1: TApplicationEvents;
+    //ApplicationEvents1: TApplicationEvents;
     Gen: TButton;
     procedure RerollClick(Sender: TObject);
     procedure UnrollClick(Sender: TObject);
     procedure SoldClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure ApplicationEvents1Minimize(Sender: TObject);
+    //procedure ApplicationEvents1Minimize(Sender: TObject);
     procedure GenClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -64,12 +67,13 @@ implementation
 
 uses Main, SelServ, StrUtils, Web, Config;
 
-{$R *.dfm}
+{$R *.lfm}
 
 function UrlEncode(s: string): string;
 begin
-  NewGuyForm.PoorCodeDesign.InputString := s;
-  Result := NewGuyForm.PoorCodeDesign.Encode;
+  //NewGuyForm.PoorCodeDesign.InputString := s;
+  //Result := NewGuyForm.PoorCodeDesign.Encode;
+  Result := s;
 end;
 
 procedure Roll(stat: TPanel);
@@ -210,10 +214,10 @@ begin
 end;
  }
 
-procedure TNewGuyForm.ApplicationEvents1Minimize(Sender: TObject);
+{procedure TNewGuyForm.ApplicationEvents1Minimize(Sender: TObject);
 begin
   MainForm.MinimizeIt;
-end;
+end;}
 
 function GenerateName: string;
 const
@@ -264,4 +268,4 @@ begin
     Klass.Items.Add(Split(K.Klasses.Lines[i],0));
 end;
 
-end.
+end.

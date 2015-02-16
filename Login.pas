@@ -1,10 +1,12 @@
 unit Login;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Psock, NMHttp;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls{, Psock, NMHttp};
 
 type
   TLoginForm = class(TForm)
@@ -35,13 +37,13 @@ var
 
 implementation
 
-uses ShellAPI, Main, NewGuy, SelServ;
+uses Main, NewGuy, SelServ;
 
-{$R *.dfm}
+{$R *.lfm}
 
 procedure TLoginForm.Label2Click(Sender: TObject);
 begin
-	ShellExecute(GetDesktopWindow(), 'open', PChar(TLabel(Sender).Caption), nil, '', SW_SHOW);
+	 OpenDocument(PChar(TLabel(Sender).Caption)); { *Converted from ShellExecute* }
 end;
 
 procedure TLoginForm.AccountChange(Sender: TObject);

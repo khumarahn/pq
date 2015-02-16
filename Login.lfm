@@ -1,0 +1,189 @@
+object LoginForm: TLoginForm
+  Left = 1423
+  Height = 448
+  Top = 29
+  Width = 265
+  Caption = 'Progress Quest Login'
+  ClientHeight = 448
+  ClientWidth = 265
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poScreenCenter
+  LCLVersion = '1.2.6.0'
+  object GroupBox1: TGroupBox
+    Left = 12
+    Height = 69
+    Top = 176
+    Width = 237
+    Caption = 'New Users'
+    ClientHeight = 54
+    ClientWidth = 233
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 0
+      Height = 18
+      Top = 0
+      Width = 233
+      Align = alTop
+      AutoSize = False
+      Caption = '  To sign up for a new account, visit'
+      Layout = tlBottom
+      ParentColor = False
+    end
+    object Label2: TLabel
+      Cursor = crHandPoint
+      Left = 0
+      Height = 25
+      Top = 18
+      Width = 233
+      Align = alTop
+      Alignment = taCenter
+      AutoSize = False
+      Caption = 'http://progressquest.com/user.php'
+      Color = clBtnFace
+      Font.Color = clActiveCaption
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold, fsUnderline]
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      OnClick = Label2Click
+    end
+  end
+  object Login: TButton
+    Left = 88
+    Height = 25
+    Top = 388
+    Width = 75
+    Caption = 'Login'
+    Default = True
+    Enabled = False
+    OnClick = LoginClick
+    TabOrder = 1
+  end
+  object Button1: TButton
+    Left = 172
+    Height = 25
+    Top = 388
+    Width = 75
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object GroupBox2: TGroupBox
+    Left = 12
+    Height = 121
+    Top = 256
+    Width = 237
+    Caption = 'Proxy Settings'
+    ClientHeight = 106
+    ClientWidth = 233
+    TabOrder = 3
+    object Label3: TLabel
+      Left = 10
+      Height = 45
+      Top = 6
+      Width = 213
+      AutoSize = False
+      Caption = 'Most people can leave this blank, but if you use a proxy to connect to the Web, or wish to use a proxy to cheat, enter it here.'
+      ParentColor = False
+      WordWrap = True
+    end
+    object LabeledEdit1: TLabeledEdit
+      Left = 10
+      Height = 23
+      Top = 70
+      Width = 149
+      EditLabel.AnchorSideLeft.Control = LabeledEdit1
+      EditLabel.AnchorSideRight.Control = LabeledEdit1
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = LabeledEdit1
+      EditLabel.Left = 10
+      EditLabel.Height = 13
+      EditLabel.Top = 54
+      EditLabel.Width = 149
+      EditLabel.Caption = 'Server'
+      EditLabel.ParentColor = False
+      TabOrder = 0
+    end
+    object LabeledEdit2: TLabeledEdit
+      Left = 162
+      Height = 23
+      Top = 70
+      Width = 57
+      EditLabel.AnchorSideLeft.Control = LabeledEdit2
+      EditLabel.AnchorSideRight.Control = LabeledEdit2
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = LabeledEdit2
+      EditLabel.Left = 162
+      EditLabel.Height = 13
+      EditLabel.Top = 54
+      EditLabel.Width = 57
+      EditLabel.Caption = 'Port'
+      EditLabel.ParentColor = False
+      TabOrder = 1
+    end
+  end
+  object GroupBox3: TGroupBox
+    Left = 12
+    Height = 157
+    Top = 12
+    Width = 237
+    Caption = 'Account Info'
+    ClientHeight = 142
+    ClientWidth = 233
+    TabOrder = 4
+    object Label4: TLabel
+      Left = 6
+      Height = 45
+      Top = 6
+      Width = 221
+      AutoSize = False
+      Caption = 'Some realms are open to the public riffraff, but others may require a valid account. You can enter default account information here.'
+      ParentColor = False
+      WordWrap = True
+    end
+    object Account: TLabeledEdit
+      Left = 6
+      Height = 23
+      Top = 70
+      Width = 221
+      EditLabel.AnchorSideLeft.Control = Account
+      EditLabel.AnchorSideRight.Control = Account
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = Account
+      EditLabel.Left = 6
+      EditLabel.Height = 13
+      EditLabel.Top = 54
+      EditLabel.Width = 221
+      EditLabel.Caption = 'Account'
+      EditLabel.ParentColor = False
+      TabOrder = 0
+      OnChange = AccountChange
+    end
+    object Password: TLabeledEdit
+      Left = 6
+      Height = 23
+      Top = 110
+      Width = 221
+      EchoMode = emPassword
+      EditLabel.AnchorSideLeft.Control = Password
+      EditLabel.AnchorSideRight.Control = Password
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = Password
+      EditLabel.Left = 6
+      EditLabel.Height = 13
+      EditLabel.Top = 94
+      EditLabel.Width = 221
+      EditLabel.Caption = 'Password'
+      EditLabel.ParentColor = False
+      PasswordChar = '*'
+      TabOrder = 1
+      OnChange = AccountChange
+    end
+  end
+end

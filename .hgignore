@@ -3,3 +3,6 @@ syntax: glob
 *.~???
 *~
 *.obj
+*.a
+pq
+pq.compiled

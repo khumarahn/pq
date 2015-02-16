@@ -1,9 +1,11 @@
 unit Web;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, WinInet;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Classes{, WinInet};
 
 type
   EWebError = class(Exception);
@@ -40,7 +42,7 @@ begin
 end;
  }
 
-function DownloadString(url: string): string;
+{function DownloadString(url: string): string;
 var
   NetHandle: HINTERNET;
   UrlHandle: HINTERNET;
@@ -53,10 +55,10 @@ begin
   if proxyok then conntype := INTERNET_OPEN_TYPE_PRECONFIG;
   NetHandle := InternetOpen('PQ6.2', conntype, nil, nil, 0);
   if Assigned(NetHandle) then
-  begin                                 {
-    if Len(username + password) > 0 then
-      UrlHandle := OpenAuthUrl(NetHandle, username, password)
-    else                                 }
+  begin
+    //if Len(username + password) > 0 then
+    //  UrlHandle := OpenAuthUrl(NetHandle, username, password)
+    //else
       UrlHandle := InternetOpenUrl(NetHandle, PChar(Url),
                                    nil, 0,  // headers[size]
                                    INTERNET_FLAG_KEEP_CONNECTION or
@@ -80,8 +82,13 @@ begin
     raise EWebError.Create('Unable to initialize internet API');
   end;
 end;
+}
 
+function DownloadString(url: string): string;
+begin
+
+end;
 
 initialization
   ProxyOK := True;
-end.
+end.

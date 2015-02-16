@@ -6,8 +6,8 @@ CATEGORY: games
 
 STATUS: mature
 
-LANGUAGE: Delphi
+LANGUAGE: Lazarus
 
-TAGS: Object Pascal PQ
+TAGS: Object Pascal Free Pascal Lazarus PQ
 
 MAIN: Main.pas

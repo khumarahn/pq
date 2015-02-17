@@ -1,7 +1,7 @@
 object ServerSelectForm: TServerSelectForm
-  Left = 506
+  Left = 294
   Height = 381
-  Top = 319
+  Top = 149
   Width = 490
   Caption = 'Progress Quest - Select Realm'
   ClientHeight = 381
@@ -50,7 +50,22 @@ object ServerSelectForm: TServerSelectForm
     BevelOuter = bvLowered
     BorderWidth = 4
     Caption = 'Panel1'
+    ClientHeight = 277
+    ClientWidth = 302
     TabOrder = 1
+    object Desc: TMemo
+      Left = 5
+      Height = 267
+      Top = 5
+      Width = 292
+      Align = alClient
+      Anchors = []
+      Lines.Strings = (
+        'Desc'
+      )
+      ParentColor = True
+      TabOrder = 0
+    end
   end
   object Select: TButton
     Left = 313

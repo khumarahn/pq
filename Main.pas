@@ -1,9 +1,11 @@
 {
   do not forget:
-  * guild in Label1 (wtf is guild?)
-  * where is realm?
+  * export motto, guild, passkey into text, and check after load
+  * where is realm?      Spells.Hint
   * network communications
   * icon
+  * proxy?
+  * if (MainForm.Label8.Tag and 16) = 0 ??????????
 }
 
 unit Main;
@@ -114,15 +116,9 @@ type
     function MonsterTask(var level: Integer): String;
     function EquipPrice: Integer;
     procedure Brag(trigger: String);
-    procedure TriggerAutosizes;
     function GameSaveName: String;
-    {procedure OnTrayMessage(var Msg: TMessage); message wmIconTray;}
-    {procedure OnSysCommand(var Msg : TWMSysCommand); message WM_SYSCOMMAND;}
     procedure Guildify;
     procedure ClearAllSelections;
-    {procedure OnQueryEndSession(var Msg : TMessage); message WM_QUERYENDSESSION;}
-    {procedure OnEndSession(var Msg : TMessage); message WM_ENDSESSION;}
-    {procedure RestoreIt;}
     function AuthenticateUrl(url: String): String;
     {$IFDEF LOGGING}
     procedure Log(line: String);
@@ -133,14 +129,12 @@ type
     function NamedMonster(level: Integer): String;
     function ImpressiveGuy: String;
   public
-    {FTrayIcon: TNotifyIconData;}
     FReportSave: Boolean;
     FLogEvents: Boolean;
     FMakeBackups: Boolean;
     FMinToTray: Boolean;
     FExportSheets: Boolean;
     FSaveFileName: String;
-    {procedure MinimizeIt;}
     procedure LoadGame(name: String);
     function SaveGame: Boolean;
     procedure Put(list: TListView; key: String; value: String); overload;
@@ -176,30 +170,12 @@ var
 function Split(s: String; field: Integer): String; overload;
 function Split(s: String; field: Integer; separator: String): String; overload;
 
-procedure Navigate(url: String);
-
 implementation
 
-uses Web, StrUtils, NewGuy, Math, Config, Front, {ZLIBEX, }SelServ, Login,
-  Registry{, ShlObj};
+uses Web, StrUtils, NewGuy, Math, Config, Front, SelServ, Login,
+  Registry;
 
 {$R *.lfm}
-
-// Returns '' if not there, which is lame, but okay for my purposes
-//function RegRead(root: HKEY; path, name: String): String;
-//var
-//  Reg: TRegistry;
-//begin
-//  Reg := TRegistry.Create;
-//  try
-//    Reg.RootKey := root;
-//    if Reg.OpenKey(path, false) then
-//      Result := Reg.ReadString(name);
-//    Reg.CloseKey;
-//  finally
-//    Reg.Free;
-//  end;
-//end;
 
 procedure RegWrite(root: HKEY; path, name, value: String);
 var
@@ -216,80 +192,10 @@ begin
   end;
 end;
 
-{
-procedure MakeFileAssociations;
-const
-  kPQFileType = 'ProgressQuest.GameSave';
-var
-  kOpenCommand: String;
-begin
-  kOpenCommand := '"' + Application.ExeName + '" "%1"';
-  try
-    RegWrite(HKEY_CLASSES_ROOT, kFileExt,'', kPQFileType);
-    RegWrite(HKEY_CLASSES_ROOT, kPQFileType, '', 'Progresss Quest saved game');
-    RegWrite(HKEY_CLASSES_ROOT, kPQFileType + '\DefaultIcon', '', Application.ExeName + ',0');
-    RegWrite(HKEY_CLASSES_ROOT, kPQFileType + '\Shell\Open', '', '&Open');
-    if RegRead(HKEY_CLASSES_ROOT, kPQFileType + '\Shell\Open\Command', '') <> kOpenCommand then begin
-      RegWrite(HKEY_CLASSES_ROOT, kPQFileType + '\Shell\Open\Command', '', kOpenCommand);
-      // Notify Windows Explorer to realize we added this. In case this is slow
-      // I don't do this unless I'm sure this one has changed.
-      SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nil, nil);
-    end;
-  except
-    on Exception do begin
-      // Don't care
-    end;
-  end;
-end;
-}
-{procedure TMainForm.MinimizeIt;
-begin
-  if not FMinToTray then Exit;
-  with FTrayIcon do
-  begin
-    cbSize := SizeOf(FTrayIcon);
-    Wnd := Handle;
-    uID := 0;
-    uFlags := NIF_MESSAGE + NIF_ICON + NIF_TIP;
-    uCallbackMessage := wmIconTray;
-    hIcon := Application.Icon.Handle;
-    StrPLCopy(szTip, Caption, 63);
-  end;
-  Application.Minimize;
-  ShowWindow(Application.Handle, SW_HIDE);
-  Shell_NotifyIcon(NIM_ADD,@FTrayIcon);
-end;}
-
-{procedure TMainForm.OnSysCommand(var Msg: TWMSysCommand);
-begin
-  if (Msg.CmdType = SC_MINIMIZE) and FMinToTray then
-    MinimizeIt();
-  inherited;
-end;}
-
-{procedure TMainForm.RestoreIt;
-begin
-  ShowWindow(Application.Handle, SW_SHOW);
-  Application.Restore;
-  Shell_NotifyIcon(NIM_DELETE, @MainForm.FTrayIcon);
-end;}
-
-{procedure TMainForm.OnTrayMessage(var Msg: TMessage);
-begin
-  case Msg.lParam of
-    WM_LBUTTONDOWN, WM_RBUTTONDOWN:
-      RestoreIt;
-
-    WM_LBUTTONDBLCLK, WM_RBUTTONDBLCLK:
-      RestoreIt;
-  end;
-end;}
-
 procedure StartTimer;
 begin
   if not MainForm.Timer1.Enabled then begin
-    MainForm.Timer1.Tag := GetTickCount; { *Converted from TimeGetTime* }
-    //Shell_NotifyIcon(NIM_ADD, @MainForm.FTrayIcon);
+    MainForm.Timer1.Tag := GetTickCount;
   end;
   MainForm.Timer1.Enabled := True;
   // BS location for this, but...
@@ -718,7 +624,6 @@ begin
     Result := Index;
     Caption := key;
     MakeVisible(false);
-    list.Width := list.Width - 1; // trigger an autosize
   end;
 end;
 
@@ -745,16 +650,16 @@ begin
     then SubItems.Add(value)
     else SubItems[0] := value;
   end;
-  //list.MultiSelect := true;
-  //list.RowSelect := true;
-  //list.HideSelection := false;
   list.Items[pos].Selected := true;
 end;
 
 function LevelUpTime(level: Integer): Integer;  // seconds
 begin
-  // 20 minutes per level
-  Result := 20 * level * 60;
+  // original levelup curve - exponential
+  Result := Round((20.0 + IntPower(1.15,level)) * 60.0);
+
+  // old levelup curve - 20 minutes per level
+  //Result := 20 * level * 60;
 end;
 
 procedure TMainForm.GoButtonClick(Sender: TObject);
@@ -983,59 +888,6 @@ begin
   SaveGame;
 end;
 
-function Rome(var n: Integer; dn: Integer; var s: String; ds: String): Boolean;
-begin
-  Result := (n >= dn);
-  if Result then begin
-    n := n - dn;
-    s := s + ds;
-  end;
-end;
-
-function UnRome(var s: String; dn: Integer; var n: Integer; ds: String): Boolean;
-begin
-  Result := (Copy(s,1,Length(ds)) = ds);
-  if Result then begin
-    s := Copy(s,Length(ds)+1,10000);
-    n := n + dn;
-  end;
-end;
-
-function IntToRoman(n: Integer): String;
-begin
-  while Rome(n, 1000, Result, 'M') do ;
-  Rome(n, 900, Result, 'CM');
-  Rome(n, 500, Result, 'D');
-  Rome(n, 400, Result, 'CD');
-  while Rome(n, 100, Result, 'C') do ;
-  Rome(n, 90, Result, 'XC');
-  Rome(n, 50, Result, 'L');
-  Rome(n, 40, Result, 'XL');
-  while Rome(n, 10, Result, 'X') do ;
-  Rome(n, 9, Result, 'IX');
-  Rome(n, 5, Result, 'V');
-  Rome(n, 4, Result, 'IV');
-  while Rome(n, 1, Result, 'I') do ;
-end;
-
-function RomanToInt(n: String): Integer;
-begin
-  Result := 0;
-  while UnRome(n, 1000, Result, 'M') do ;
-  UnRome(n, 900, Result, 'CM');
-  UnRome(n, 500, Result, 'D');
-  UnRome(n, 400, Result, 'CD');
-  while UnRome(n, 100, Result, 'C') do ;
-  UnRome(n, 90, Result, 'XC');
-  UnRome(n, 50, Result, 'L');
-  UnRome(n, 40, Result, 'XL');
-  while UnRome(n, 10, Result, 'X') do ;
-  UnRome(n, 9, Result, 'IX');
-  UnRome(n, 5, Result, 'V');
-  UnRome(n, 4, Result, 'IV');
-  while UnRome(n, 1, Result, 'I') do ;
-end;
-
 procedure TMainForm.CompleteAct;
 begin
   PlotBar.Position := 0;
@@ -1170,8 +1022,14 @@ begin
 end;
 
 procedure TMainForm.AddR(list: TListView; key: String; value: Integer);
+var
+  lev: String;
 begin
-  Put(list, key, IntToRoman(value + RomanToInt(Get(list,key))));
+  lev := Get(list, key);
+  if Length(lev)>0 then
+    Put(list, key, IntToRoman(value + RomanToInt(Get(list,key))))
+  else
+    Put(list, key, 'I');
 end;
 
 function TMainForm.Get(list: TListView; key: String): String;
@@ -1215,7 +1073,6 @@ begin
     then SubItems.Add(value)
     else SubItems[0] := value;
   end;
-  list.Width := list.Width - 1; // trigger an autosize
 end;
 
 procedure TMainForm.LevelUp;
@@ -1313,8 +1170,6 @@ begin
   FMakeBackups := true;
   FMinToTray := true;
   FExportSheets := false;
-
-  //MakeFileAssociations;
 end;
 
 procedure TMainForm.SpeedButton1Click(Sender: TObject);
@@ -1335,7 +1190,7 @@ begin
       Exit;
     end;
     Put(Traits, 'Name', NewGuyForm.Name.Text);
-    if FileExistsUTF8(GameSaveName) { *Converted from FileExists* } and
+    if FileExistsUTF8(GameSaveName) and
           (mrNo = MessageDlg('The saved game "' + GameSaveName + '" already exists. Do you want to overwrite it?', mtWarning, [mbYes,mbNo], 0)) then begin
       // go around again
     end else begin
@@ -1410,7 +1265,7 @@ begin
     else if ParamStr(i) = '-export-only'
     then exportandexit := true
     else if ParamStr(i) = '-no-proxy'
-    then ProxyOK := false
+    then //ProxyOK := false
     else if ParamStr(i) = '-help'
     then begin
       ShowMessage(KUsage);
@@ -1499,7 +1354,7 @@ begin
   Result := true;
   try
     if FMakeBackups then begin
-      DeleteFileUTF8(ChangeFileExt(GameSaveName, '.bak')); { *Converted from DeleteFile* }
+      DeleteFileUTF8(ChangeFileExt(GameSaveName, '.bak'));
       RenameFile(PChar(GameSaveName), PChar(ChangeFileExt(GameSaveName, '.bak')));
     end;
     f := TFileStream.Create(GameSaveName, fmCreate);
@@ -1511,6 +1366,8 @@ begin
   end;
 
   Save := TSave.Create;
+
+  Save.Label1_Hint := Label1.Hint;
 
   Save.Traits_Tag := Traits.Tag;
   Save.Traits_Hint := Traits.Hint;
@@ -1647,6 +1504,8 @@ begin
   Save := TSave.Create;
   if ExtractFileExt(name) = '.dfm' then Save.LoadDfm(f) else Save.Load(f);
 
+  Label1.Hint := Save.Label1_Hint;
+
   Traits.Tag := Save.Traits_Tag;
   Traits.Hint := Save.Traits_Hint;
   for i := 0 to Save.Traits_Items_Captions.Count-1 do begin
@@ -1737,25 +1596,12 @@ begin
   Log('Loaded game: ' + name);
   {$ENDIF}
   StartTimer;
-  TriggerAutosizes;
-end;
-
-procedure TMainForm.TriggerAutosizes;
-begin
-  Plots.Width := 100;
-  Quests.Width := 100;
-  Inventory.Width := 100;
-  Equips.Width := 100;
-  Spells.Width := 100;
-  Traits.Width := 100;
-  Stats.Width := 100;
 end;
 
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if Timer1.Enabled then begin
     Timer1.Enabled := false;
-    //Shell_NotifyIcon(NIM_DELETE, @FTrayIcon);
     if SaveGame then
       if FReportSave then
         ShowMessage('Game saved as ' + GameSaveName);
@@ -1771,7 +1617,7 @@ begin
     if GetHostName <> '' then
       FSaveFileName := FSaveFileName + ' [' + GetHostName + ']';
     FSaveFileName := FSaveFileName + kFileExt;
-    FSaveFileName := ExpandFileNameUTF8(PChar(FSaveFileName)); { *Converted from ExpandFileName* }
+    FSaveFileName := ExpandFileNameUTF8(PChar(FSaveFileName));
   end;
   Result := FSaveFileName;
 end;
@@ -1779,34 +1625,28 @@ end;
 procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  //if (FindWindow('TAppBuilder', nil) > 0) and (ssCtrl in Shift) and (ssShift in Shift) and (Key = ord('C')) then begin
-  //  {$IFDEF CHEATS}
-  //  Cheats.Visible := not Cheats.Visible;
-  //  {$ENDIF}
-  //end;
+  if (ssCtrl in Shift) and (ssShift in Shift) and (Key = ord('C')) then begin
+    {$IFDEF CHEATS}
+    Cheats.Visible := not Cheats.Visible;
+    {$ENDIF}
+  end;
   if (ssCtrl in Shift) and (Key = ord('A')) then begin
     ShowMessage(CharSheet);
   end;
   if GetPasskey = 0 then Exit; // no need for these things
   if (ssCtrl in Shift) and (Key = ord('B')) then begin
     Brag('b');
-    Navigate(GetHostAddr + 'name=' + UrlEncode(Get(Traits,'Name')));
+    OpenUrl(GetHostAddr + 'name=' + UrlEncode(Get(Traits,'Name')));
   end;
   if (ssCtrl in Shift) and (Key = ord('M')) then begin
     SetMotto(InputBox('Progress Quest', 'Declare your motto!', GetMotto));
     Brag('m');
-    Navigate(GetHostAddr + 'name=' + UrlEncode(Get(Traits,'Name')));
+    OpenUrl(GetHostAddr + 'name=' + UrlEncode(Get(Traits,'Name')));
   end;
   if (ssCtrl in Shift) and (Key = ord('G')) then begin
     SetGuild(InputBox('Progress Quest', 'Choose a guild.'#13#13'Make sure you undestand the guild rules before you join one. To learn more about guilds, visit http://progressquest.com/guilds.php', GetGuild));
     Guildify;
   end;
-end;
-
-
-procedure Navigate(url: String);
-begin
-   OpenDocument(PChar(url)); { *Converted from ShellExecute* }
 end;
 
 function LFSR(pt: String; salt: Integer): Integer;
@@ -1896,7 +1736,7 @@ begin
     s := Take(b);
     if s <> '' then ShowMessage(s);
     s := Take(b);
-    if s <> '' then Navigate(s);
+    if s <> '' then DownloadString(s);
   except
     on EWebError do begin
       // 'ats okay.
@@ -1904,25 +1744,6 @@ begin
     end;
   end;
 end;
-
-{procedure TMainForm.OnQueryEndSession(var Msg: TMessage);
-var Action: TCloseAction;
-begin
-  FReportSave := false;
-  FormClose(Self, Action);
-  ReplyMessage(-1);
-end;}
-
-{procedure TMainForm.OnEndSession(var Msg: TMessage);
-var Action: TCloseAction;
-begin
-  Msg.Result := 0;
-  if Msg.wParam <> 0 then begin
-    FReportSave := false;
-    FormClose(Self, Action);
-  end;
-  ReplyMessage(0);
-end;}
 
 initialization
   RegisterClasses([TMainForm, TListView, TCustomListView,

@@ -9,6 +9,8 @@ uses
 
 type TSave = class(TCollectionItem)
   private
+    mLabel1_Hint: String;
+
     mTraits_Tag: LongInt;
     mTraits_Hint: String;
     mTraits_Items_Captions: TStringList;
@@ -77,6 +79,8 @@ type TSave = class(TCollectionItem)
     procedure LoadDfm(f: TStream);
     constructor Create;
   published
+    property Label1_Hint: String read mLabel1_Hint write mLabel1_Hint;
+
     property Traits_Tag: LongInt read mTraits_Tag write mTraits_Tag;
     property Traits_Hint: String read mTraits_Hint write mTraits_Hint;
     property Traits_Items_Captions: TStringList read mTraits_Items_Captions write mTraits_Items_Captions;
@@ -254,6 +258,10 @@ implementation
         else              begin v_type := 'else';           Reader.SkipValue; v_value := '#WTF!!111#';                end;
         end;
         WriteLn(v_class + '.' + v_name + ' = ' + v_value + ' ('+v_type+')');
+
+        if v_class = 'LABEL1' then begin
+          if v_name = 'HINT' then Label1_Hint := v_value;
+        end; // LABEL1
 
         if v_class = 'TRAITS' then begin
           if v_name = 'TAG' then Traits_Tag := StrToInt(v_value);

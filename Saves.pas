@@ -2,6 +2,8 @@ unit Saves;
 
 {$mode delphi}
 
+{$UNDEF PQSAVES_DEBUG}
+
 interface
 
 uses
@@ -16,6 +18,7 @@ type TSave = class(TCollectionItem)
     mTraits_Items_Captions: TStringList;
     mTraits_Items_Subitems: TStringList;
 
+    mStats_Hint: String;
     mStats_Items_Captions: TStringList;
     mStats_Items_Subitems: TStringList;
 
@@ -86,6 +89,7 @@ type TSave = class(TCollectionItem)
     property Traits_Items_Captions: TStringList read mTraits_Items_Captions write mTraits_Items_Captions;
     property Traits_Items_Subitems: TStringList read mTraits_Items_Subitems write mTraits_Items_Subitems;
 
+    property Stats_Hint: String read mStats_Hint write mStats_Hint;
     property Stats_Items_Captions: TStringList read mStats_Items_Captions write mStats_Items_Captions;
     property Stats_Items_Subitems: TStringList read mStats_Items_Subitems write mStats_Items_Subitems;
 
@@ -205,7 +209,9 @@ implementation
     b_byte: ShortInt;
     b_string1, b_string2: String;
   begin
+    {$IFDEF PQSAVES_DEBUG}
     writeln('Hello world');
+    {$ENDIF}
 
     v_binary := TMemoryStream.Create;
 
@@ -216,10 +222,14 @@ implementation
 
       Reader.BeginRootComponent;
 
+      {$IFDEF PQSAVES_DEBUG}
       Write('Starting new component ');
+      {$ENDIF}
       v_class_type := Reader.ReadStr;
       v_class := UpperCase(Reader.ReadStr);
+      {$IFDEF PQSAVES_DEBUG}
       WriteLn(v_class + ' : ' + v_class_type);
+      {$ENDIF}
 
       while True do
       begin
@@ -257,7 +267,9 @@ implementation
           vaQWord:        begin v_type := 'vaQWord';        Reader.SkipValue;                                         end;
         else              begin v_type := 'else';           Reader.SkipValue; v_value := '#WTF!!111#';                end;
         end;
+        {$IFDEF PQSAVES_DEBUG}
         WriteLn(v_class + '.' + v_name + ' = ' + v_value + ' ('+v_type+')');
+        {$ENDIF}
 
         if v_class = 'LABEL1' then begin
           if v_name = 'HINT' then Label1_Hint := v_value;
@@ -267,30 +279,35 @@ implementation
           if v_name = 'TAG' then Traits_Tag := StrToInt(v_value);
           if v_name = 'HINT' then Traits_Hint := v_value;
           if v_name = 'ITEMS.DATA' then begin
-            b_dword := v_binary.ReadDWord; WriteLn(' length: ', b_dword);
-            b_size  := v_binary.ReadDWord; WriteLn(' size: ', b_size);
+            b_dword := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' length: ', b_dword);{$ENDIF}
+            b_size  := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' size: ', b_size);{$ENDIF}
             for i:=0 to b_size-1 do begin
               v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord;
               b_byte := v_binary.ReadByte; SetLength(b_string1, b_byte); v_binary.ReadBuffer(Pointer(b_string1)^, b_byte);
               b_byte := v_binary.ReadByte; SetLength(b_string2, b_byte); v_binary.ReadBuffer(Pointer(b_string2)^, b_byte);
               Traits_Items_Captions.Add(b_string1);
               Traits_Items_Subitems.Add(b_string2);
+              {$IFDEF PQSAVES_DEBUG}
               WriteLn(b_string1 + ' : ' + b_string2);
+              {$ENDIF}
             end;
           end;
         end; // TRAITS
 
         if v_class = 'STATS' then begin
+          if v_name = 'HINT' then Stats_Hint := v_value;
           if v_name = 'ITEMS.DATA' then begin
-            b_dword := v_binary.ReadDWord; WriteLn(' length: ', b_dword);
-            b_size  := v_binary.ReadDWord; WriteLn(' size: ', b_size);
+            b_dword := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' length: ', b_dword);{$ENDIF}
+            b_size  := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' size: ', b_size);{$ENDIF}
             for i:=0 to b_size-1 do begin
               v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord;
               b_byte := v_binary.ReadByte; SetLength(b_string1, b_byte); v_binary.ReadBuffer(Pointer(b_string1)^, b_byte);
               b_byte := v_binary.ReadByte; SetLength(b_string2, b_byte); v_binary.ReadBuffer(Pointer(b_string2)^, b_byte);
               Stats_Items_Captions.Add(b_string1);
               Stats_Items_Subitems.Add(b_string2);
+              {$IFDEF PQSAVES_DEBUG}
               WriteLn(b_string1 + ' : ' + b_string2);
+              {$ENDIF}
             end;
           end;
         end; // STATS
@@ -305,15 +322,17 @@ implementation
         if v_class = 'SPELLS' then begin
           if v_name = 'HINT' then Spells_Hint := v_value;
           if v_name = 'ITEMS.DATA' then begin
-            b_dword := v_binary.ReadDWord; WriteLn(' length: ', b_dword);
-            b_size  := v_binary.ReadDWord; WriteLn(' size: ', b_size);
+            b_dword := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' length: ', b_dword);{$ENDIF}
+            b_size  := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' size: ', b_size);{$ENDIF}
             for i:=0 to b_size-1 do begin
               v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord;
               b_byte := v_binary.ReadByte; SetLength(b_string1, b_byte); v_binary.ReadBuffer(Pointer(b_string1)^, b_byte);
               b_byte := v_binary.ReadByte; SetLength(b_string2, b_byte); v_binary.ReadBuffer(Pointer(b_string2)^, b_byte);
               Spells_Items_Captions.Add(b_string1);
               Spells_Items_Subitems.Add(b_string2);
+              {$IFDEF PQSAVES_DEBUG}
               WriteLn(b_string1 + ' : ' + b_string2);
+              {$ENDIF}
             end;
           end;
         end; // SPELLS
@@ -327,13 +346,15 @@ implementation
 
         if v_class = 'PLOTS' then begin
           if v_name = 'ITEMS.DATA' then begin
-            b_dword := v_binary.ReadDWord; WriteLn(' length: ', b_dword);
-            b_size  := v_binary.ReadDWord; WriteLn(' size: ', b_size);
+            b_dword := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' length: ', b_dword);{$ENDIF}
+            b_size  := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' size: ', b_size);{$ENDIF}
             for i:=0 to b_size-1 do begin
               v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord;
               b_byte := v_binary.ReadByte; SetLength(b_string1, b_byte); v_binary.ReadBuffer(Pointer(b_string1)^, b_byte);
               Plots_Items_Captions.Add(b_string1);
+              {$IFDEF PQSAVES_DEBUG}
               WriteLn(b_string1);
+              {$ENDIF}
             end;
           end;
         end; // PLOTS
@@ -347,13 +368,15 @@ implementation
 
         if v_class = 'QUESTS' then begin
           if v_name = 'ITEMS.DATA' then begin
-            b_dword := v_binary.ReadDWord; WriteLn(' length: ', b_dword);
-            b_size  := v_binary.ReadDWord; WriteLn(' size: ', b_size);
+            b_dword := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' length: ', b_dword);{$ENDIF}
+            b_size  := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' size: ', b_size);{$ENDIF}
             for i:=0 to b_size-1 do begin
               v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord;
               b_byte := v_binary.ReadByte; SetLength(b_string1, b_byte); v_binary.ReadBuffer(Pointer(b_string1)^, b_byte);
               Quests_Items_Captions.Add(b_string1);
+              {$IFDEF PQSAVES_DEBUG}
               WriteLn(b_string1);
+              {$ENDIF}
             end;
           end;
         end; // QUESTS
@@ -365,15 +388,17 @@ implementation
         if v_class = 'INVENTORY' then begin
           if v_name = 'TAG' then Inventory_Tag := StrToInt(v_value);
           if v_name = 'ITEMS.DATA' then begin
-            b_dword := v_binary.ReadDWord; WriteLn(' length: ', b_dword);
-            b_size  := v_binary.ReadDWord; WriteLn(' size: ', b_size);
+            b_dword := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' length: ', b_dword);{$ENDIF}
+            b_size  := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' size: ', b_size);{$ENDIF}
             for i:=0 to b_size-1 do begin
               v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord;
               b_byte := v_binary.ReadByte; SetLength(b_string1, b_byte); v_binary.ReadBuffer(Pointer(b_string1)^, b_byte);
               b_byte := v_binary.ReadByte; SetLength(b_string2, b_byte); v_binary.ReadBuffer(Pointer(b_string2)^, b_byte);
               Inventory_Items_Captions.Add(b_string1);
               Inventory_Items_Subitems.Add(b_string2);
+              {$IFDEF PQSAVES_DEBUG}
               WriteLn(b_string1 + ' : ' + b_string2);
+              {$ENDIF}
             end;
           end;
         end; // INVENTORY
@@ -389,15 +414,17 @@ implementation
           if v_name = 'TAG' then Equips_Tag := StrToInt(v_value);
           if v_name = 'HINT' then Equips_Hint := v_value;
           if v_name = 'ITEMS.DATA' then begin
-            b_dword := v_binary.ReadDWord; WriteLn(' length: ', b_dword);
-            b_size  := v_binary.ReadDWord; WriteLn(' size: ', b_size);
+            b_dword := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' length: ', b_dword);{$ENDIF}
+            b_size  := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' size: ', b_size);{$ENDIF}
             for i:=0 to b_size-1 do begin
               v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord; v_binary.ReadDWord;
               b_byte := v_binary.ReadByte; SetLength(b_string1, b_byte); v_binary.ReadBuffer(Pointer(b_string1)^, b_byte);
               b_byte := v_binary.ReadByte; SetLength(b_string2, b_byte); v_binary.ReadBuffer(Pointer(b_string2)^, b_byte);
               Equips_Items_Captions.Add(b_string1);
               Equips_Items_Subitems.Add(b_string2);
+              {$IFDEF PQSAVES_DEBUG}
               WriteLn(b_string1 + ' : ' + b_string2);
+              {$ENDIF}
             end;
           end;
         end; // EQUIPS
@@ -432,8 +459,11 @@ implementation
     except
       on E: Exception do break;
     end;
+    {$IFDEF PQSAVES_DEBUG}
     writeln('Done, world!');
+    {$ENDIF}
   end;
+
 
 end.
 

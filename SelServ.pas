@@ -18,7 +18,6 @@ type
     Servers: TListBox;
     Label1: TLabel;
     Label2: TLabel;
-    Panel1: TPanel;
     Desc: TMemo;
     Select: TButton;
     Button2: TButton;
@@ -117,7 +116,7 @@ begin
   Desc.Lines.Add('Fetching realm list from server...');
   url := 'http://www.progressquest.com/list.php?' + RevString + '&p=' + path;
   if AccessCode.Visible then
-    url := url + '&ac=' + UrlEncode(AccessCode.Text);
+    url := url + '&ac=' + EncodeUrl(AccessCode.Text);
   try
     Screen.Cursor := crHourglass;
     try

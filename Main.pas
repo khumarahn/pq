@@ -1,11 +1,9 @@
 {
   do not forget:
-  * export motto, guild, passkey into text, and check after load
-  * where is realm?      Spells.Hint
-  * network communications
   * icon
+  * taskbar icon and hint
   * proxy?
-  * if (MainForm.Label8.Tag and 16) = 0 ??????????
+  * very large experience and spell levels?
 }
 
 unit Main;
@@ -33,14 +31,13 @@ const
   // 1: pq 6.0, some early release I guess; don't remember
   RevString = '&rev=5';
   wmIconTray = WM_USER + Ord('t');
-  kFileExt = '.pq3';
+  kFileExt = '.lpq';
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
-  published
     Button1: TButton;
     Button3: TButton;
     CashIn: TButton;
@@ -82,7 +79,10 @@ type
     TaskBar: TProgressBar;
     Timer1: TTimer;
     Traits: TListView;
+    TrayIcon1: TTrayIcon;
     vars: TPanel;
+    procedure OnMainFormWindowStateChange(Sender: TObject);
+    procedure OnClickTrayIcon1(Sender: TObject);
     procedure GoButtonClick(Sender: TObject);
     procedure PlotsItemChecked(Sender: TObject; Item: TListItem);
     procedure QuestsItemChecked(Sender: TObject; Item: TListItem);
@@ -98,6 +98,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private
+    pWindowState: TWindowState;
     Save: TSave;
     procedure Task(caption: String; msec: Integer);
     procedure Dequeue;
@@ -691,6 +692,27 @@ begin
   Brag('s');
 end;
 
+procedure TMainForm.OnMainFormWindowStateChange(Sender: TObject);
+begin
+  // weird bug with gtk have to check prev state
+  if (WindowState = wsMinimized) and (pWindowState <> wsMinimized) then begin
+    TrayIcon1.Hint := 'pq';
+    TrayIcon1.Show;
+    Hide;
+    ShowInTaskBar := stNever;
+    pWindowState := wsMinimized;
+  end;
+  pWindowState := WindowState;
+end;
+
+procedure TMainForm.OnClickTrayIcon1(Sender: TObject);
+begin
+  if WindowState <> wsNormal then WindowState := wsNormal;
+  Show;
+  ShowInTaskBar := stDefault;
+  TrayIcon1.Hide;
+end;
+
 procedure TMainForm.PlotsItemChecked(Sender: TObject; Item: TListItem);
 begin
   Item.Checked := not Item.Checked;
@@ -883,7 +905,6 @@ begin
       Checked := False;
       MakeVisible(false);
     end;
-    Width := Width - 1; // trigger a column resize
   end;
   SaveGame;
 end;
@@ -953,6 +974,12 @@ begin
   WrLn;
   WrLn(Get(Traits,'Race') + ' ' +  Get(Traits,'Class'));
   WrLn(Format('Level %d (exp. %d/%d)', [GetI(Traits,'Level'), ExpBar.Position, ExpBar.Max]));
+  {$IFDEF CHEATS}
+  WrLn;
+  WrLn('Guild: '''+GetGuild+''', Motto: '''+GetMotto+'''');
+  WrLn('Login: '''+GetLogin+''', Password: '''+GetPassword+''', Passkey: '+IntToStr(GetPasskey));
+  WrLn('HostName: '''+GetHostName+''', HostAddr: '''+GetHostAddr+'''');
+  {$ENDIF}
   //WrLn('Level ' + Get(Traits,'Level') + ' (' + ExpBar.Hint + ')');
   WrLn;
   with Plots do if Items.Count > 0 then
@@ -1345,25 +1372,13 @@ end;
 function TMainForm.SaveGame: Boolean;
 var
   f: TFileStream;
-  //m, zm: TMemoryStream;
+  m, zm: TMemoryStream;
   i: Integer;
 begin
   {$IFDEF LOGGING}
   Log('Saving game: ' + GameSaveName);
   {$ENDIF}
   Result := true;
-  try
-    if FMakeBackups then begin
-      DeleteFileUTF8(ChangeFileExt(GameSaveName, '.bak'));
-      RenameFile(PChar(GameSaveName), PChar(ChangeFileExt(GameSaveName, '.bak')));
-    end;
-    f := TFileStream.Create(GameSaveName, fmCreate);
-  except
-    on EfCreateError do begin
-      Result := false;
-      Exit;
-    end;
-  end;
 
   Save := TSave.Create;
 
@@ -1376,6 +1391,7 @@ begin
     Save.Traits_Items_SubItems.Add(Items[i].Subitems[0]);
   end;
 
+  Save.Stats_Hint := Stats.Hint;
   with Stats do for i := 0 to Items.Count-1 do begin
     Save.Stats_Items_Captions.Add(Items[i].Caption);
     Save.Stats_Items_SubItems.Add(Items[i].Subitems[0]);
@@ -1445,64 +1461,65 @@ begin
   Save.Timer1_Enabled := Timer1.Enabled;
   Save.Timer1_Interval := Timer1.Interval;
 
-  Save.Dump(f);
+  m := TMemoryStream.Create;
+  Save.Dump(m);
+  zm := TMemoryStream.Create;
+  m.Position := 0;
+  Zlib(m, zm);
+  zm.Position := 0;
 
-  //ClearAllSelections;
-  //m := TMemoryStream.Create;
-  //zm := TMemoryStream.Create;
+  if FMakeBackups then try
+    if FileExists(GameSaveName) then
+      DeleteFileUTF8(ChangeFileExt(GameSaveName, '.bak'));
+    RenameFile(GameSaveName, ChangeFileExt(GameSaveName, '.bak'));
+  except
+    on Exception do begin
+    end;
+  end;
 
-  //for i := 0 to ComponentCount-1 do
-  //  m.WriteComponent(Components[i]);
+  try
+    f := TFileStream.Create(ChangeFileExt(GameSaveName, '.lpq'), fmCreate);
+  except
+    on EfCreateError do begin
+      Result := false;
+      Exit;
+    end;
+  end;
 
-  // Pack m to zm
-  //m.Seek(0, soFromBeginning);
-  //Zlib(m, zm);
-
-  // Write zm to file
-  //zm.Seek(0, soFromBeginning);
-  //f.CopyFrom(zm, zm.Size);
-
-  //m.Free;
-  //zm.Free;
-  f.Free;
+  f.Position := 0;
+  f.CopyFrom(zm, zm.Size);
+  m.Free; zm.Free; f.Free;
 end;
 
 procedure TMainForm.LoadGame(name: String);
 var
   f: TStream;
-  //m, zm: TMemoryStream;
+  m, zm: TMemoryStream;
   i, c: Integer;
 begin
   {$IFDEF LOGGING}
   Log('Loading game: ' + name);
   {$ENDIF}
-  FSaveFileName := name;
-  //m := TMemoryStream.Create;
-  //zm := TMemoryStream.Create;
+  m := TMemoryStream.Create;
+  zm := TMemoryStream.Create;
   f := TFileStream.Create(name, fmOpenRead);
 
-  // Read from file to zm
-  //f.Seek(0, soFromBeginning);
-  //zm.CopyFrom(f, f.Size);
+  f.Position := 0;
+  zm.CopyFrom(f, f.Size);
 
-  // Unpack zm to m
-  //zm.Seek(0, soFromBeginning);
-  //UnZlib(zm,m);
+  zm.Position := 0;
+  UnZlib(zm,m);
+
+  m.Position := 0;
+  Save := TSave.Create;
+  if ExtractFileExt(name) = '.lpq' then Save.Load(m) else Save.LoadDfm(m);
 
   Traits.Items.Clear;
   Stats.Items.Clear;
   Equips.Items.Clear;
-  //m.Seek(0, soFromBeginning);
-  //for i := 0 to ComponentCount-1 do begin
-  //  {$IFDEF LOGGING}
-  //  Log('Reading component: ' + IntToStr(i) + ' ' + Components[i].Name);
-  //  {$ENDIF}
-  //  m.ReadComponent(Components[i]);
-  //end;
-
-  f.Seek(0, soFromBeginning);
-  Save := TSave.Create;
-  if ExtractFileExt(name) = '.dfm' then Save.LoadDfm(f) else Save.Load(f);
+  Spells.Items.Clear;
+  Plots.Items.Clear;
+  Inventory.Items.Clear;
 
   Label1.Hint := Save.Label1_Hint;
 
@@ -1512,6 +1529,7 @@ begin
     Put(Traits, Save.Traits_Items_Captions[i], Save.Traits_Items_SubItems[i]);
   end;
 
+  Stats.Hint := Save.Stats_Hint;
   for i := 0 to Save.Stats_Items_Captions.Count-1 do begin
     Put(Stats, Save.Stats_Items_Captions[i], Save.Stats_Items_SubItems[i]);
   end;
@@ -1588,9 +1606,9 @@ begin
   Timer1.Interval := Save.Timer1_Interval;
 
 
-  //m.Free; zm.Free;
+  m.Free; zm.Free; f.Free;
 
-  f.Free;
+  FSaveFileName := ChangeFileExt(name, '.lpq');
 
   {$IFDEF LOGGING}
   Log('Loaded game: ' + name);
@@ -1636,12 +1654,12 @@ begin
   if GetPasskey = 0 then Exit; // no need for these things
   if (ssCtrl in Shift) and (Key = ord('B')) then begin
     Brag('b');
-    OpenUrl(GetHostAddr + 'name=' + UrlEncode(Get(Traits,'Name')));
+    OpenUrl(GetHostAddr + 'name=' + EncodeUrl(Get(Traits,'Name')));
   end;
   if (ssCtrl in Shift) and (Key = ord('M')) then begin
     SetMotto(InputBox('Progress Quest', 'Declare your motto!', GetMotto));
     Brag('m');
-    OpenUrl(GetHostAddr + 'name=' + UrlEncode(Get(Traits,'Name')));
+    OpenUrl(GetHostAddr + 'name=' + EncodeUrl(Get(Traits,'Name')));
   end;
   if (ssCtrl in Shift) and (Key = ord('G')) then begin
     SetGuild(InputBox('Progress Quest', 'Choose a guild.'#13#13'Make sure you undestand the guild rules before you join one. To learn more about guilds, visit http://progressquest.com/guilds.php', GetGuild));
@@ -1676,9 +1694,9 @@ begin
   if GetPasskey = 0 then Exit; // not a online game!
   url := 'cmd=b&t=' + trigger;
   with Traits do for i := 0 to Items.Count-1 do
-    url := url + '&' + LowerCase(Items[i].Caption[1]) + '=' + UrlEncode(Items[i].Subitems[0]);
+    url := url + '&' + LowerCase(Items[i].Caption[1]) + '=' + EncodeUrl(Items[i].Subitems[0]);
   url := url + '&x=' + IntToStr(ExpBar.Position);
-  url := url + '&i=' + UrlEncode(Get(Equips,Equips.Tag));
+  url := url + '&i=' + EncodeUrl(Get(Equips,Equips.Tag));
   if Equips.Tag > 1 then url := url + '+' + Equips.Items[Equips.Tag].Caption;
   best := 0;
   if Spells.Items.Count > 0 then with Spells do begin
@@ -1686,25 +1704,34 @@ begin
       if (i+flat) * RomanToInt(Get(Spells,i)) >
          (best+flat) * RomanToInt(Get(Spells,best)) then
         best := i;
-    url := url + '&z=' + UrlEncode(Items[best].Caption + ' ' + Get(Spells,best));
+    url := url + '&z=' + EncodeUrl(Items[best].Caption + ' ' + Get(Spells,best));
   end;
   best := 0;
   for i := 1 to 5 do
     if GetI(Stats,i) > GetI(Stats,best) then best := i;
   url := url + '&k=' + Stats.Items[best].Caption + '+' + Get(Stats,best);
-  url := url + '&a=' + UrlEncode(Plots.Items[Plots.Items.Count-1].Caption);
-  url := url + '&h=' + UrlEncode(GetHostName);
+  url := url + '&a=' + EncodeUrl(Plots.Items[Plots.Items.Count-1].Caption);
+  url := url + '&h=' + EncodeUrl(GetHostName);
   url := url + RevString;
   url := url + '&p=' + IntToStr(LFSR(url, GetPasskey));
-  url := url + '&m=' + UrlEncode(GetMotto);
+  url := url + '&m=' + EncodeUrl(GetMotto);
   url := AuthenticateUrl(GetHostAddr + url);
   try
     body := DownloadString(url);
-    if (LowerCase(Split(body,0)) = 'report') then
-      ShowMessage(Split(body,1));
+    if (LowerCase(Split(body,0)) = 'report') then ShowMessage(Split(body,1));
+    {$IFDEF CHEATS}
+    WriteLn('Brag('+trigger+'); url: '''+url+''', body:');
+    WriteLn(body);
+    WriteLn('*******');
+    {$ENDIF}
   except
     on EWebError do begin
       // 'ats okay.
+      {$IFDEF CHEATS}
+      WriteLn('Brag('+trigger+'); EWebError! url: '''+url+''', body:');
+      WriteLn(body);
+      WriteLn('*******');
+      {$ENDIF}
     end;
   end;
 end;
@@ -1725,10 +1752,10 @@ begin
   if GetPasskey = 0 then Exit; // not a online game!
   url := 'cmd=guild';
   with Traits do for i := 0 to Items.Count-1 do
-    url := url + '&' + LowerCase(Items[i].Caption[1]) + '=' + UrlEncode(Items[i].Subitems[0]);
-  url := url + '&h=' + UrlEncode(GetHostName);
+    url := url + '&' + LowerCase(Items[i].Caption[1]) + '=' + EncodeUrl(Items[i].Subitems[0]);
+  url := url + '&h=' + EncodeUrl(GetHostName);
   url := url + RevString;
-  url := url + '&guild=' + UrlEncode(GetGuild);
+  url := url + '&guild=' + EncodeUrl(GetGuild);
   url := url + '&p=' + IntToStr(LFSR(url, GetPasskey));
   url := AuthenticateUrl(GetHostAddr + url);
   try
@@ -1746,8 +1773,7 @@ begin
 end;
 
 initialization
-  RegisterClasses([TMainForm, TListView, TCustomListView,
-    TCustomListViewEditor]);
+
 end.
 
 

@@ -8,7 +8,7 @@ interface
 
 uses
   LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, ComCtrls{, AppEvnts, NMURL};
+  Dialogs, StdCtrls, ExtCtrls, ComCtrls, URIParser;
 
 type
   TNewGuyForm = class(TForm)
@@ -60,7 +60,6 @@ type
 var
   NewGuyForm: TNewGuyForm;
 
-function UrlEncode(s: string): string;
 function GenerateName: string;
 
 implementation
@@ -68,13 +67,6 @@ implementation
 uses Main, SelServ, StrUtils, Web, Config;
 
 {$R *.lfm}
-
-function UrlEncode(s: string): string;
-begin
-  //NewGuyForm.PoorCodeDesign.InputString := s;
-  //Result := NewGuyForm.PoorCodeDesign.Encode;
-  Result := s;
-end;
 
 procedure Roll(stat: TPanel);
 begin
@@ -190,8 +182,8 @@ begin
         if (GetAccount <> '') or (GetPassword <> '') then
           url := StuffString(url, 8, 0, GetAccount+':'+GetPassword+'@');
         args := 'cmd=create' +
-                '&name=' + UrlEncode(Name.Text) +
-                '&realm=' + UrlEncode(MainForm.GetHostName) +
+                '&name=' + EncodeUrl(Name.Text) +
+                '&realm=' + EncodeUrl(MainForm.GetHostName) +
                 RevString;
         ParseSoldResponse(DownloadString(url + args));
       except

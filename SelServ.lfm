@@ -1,36 +1,34 @@
 object ServerSelectForm: TServerSelectForm
-  Left = 294
-  Height = 381
-  Top = 149
-  Width = 490
+  Left = 1214
+  Height = 476
+  Top = 165
+  Width = 603
   Caption = 'Progress Quest - Select Realm'
-  ClientHeight = 381
-  ClientWidth = 490
+  ClientHeight = 476
+  ClientWidth = 603
   Color = clBtnFace
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  ParentFont = True
   Position = poScreenCenter
   LCLVersion = '1.2.6.0'
   object Label1: TLabel
     Left = 8
-    Height = 13
+    Height = 16
     Top = 8
-    Width = 38
+    Width = 44
     Caption = 'Server'
     ParentColor = False
   end
   object Label2: TLabel
     Left = 172
-    Height = 13
+    Height = 16
     Top = 8
-    Width = 64
+    Width = 79
     Caption = 'Description'
     ParentColor = False
   end
   object Servers: TListBox
     Left = 8
-    Height = 277
+    Height = 372
     Top = 24
     Width = 157
     Anchors = [akTop, akLeft, akBottom]
@@ -41,53 +39,27 @@ object ServerSelectForm: TServerSelectForm
     TabOrder = 0
     TopIndex = -1
   end
-  object Panel1: TPanel
-    Left = 172
-    Height = 277
-    Top = 24
-    Width = 302
-    Anchors = [akTop, akLeft, akRight, akBottom]
-    BevelOuter = bvLowered
-    BorderWidth = 4
-    Caption = 'Panel1'
-    ClientHeight = 277
-    ClientWidth = 302
-    TabOrder = 1
-    object Desc: TMemo
-      Left = 5
-      Height = 267
-      Top = 5
-      Width = 292
-      Align = alClient
-      Anchors = []
-      Lines.Strings = (
-        'Desc'
-      )
-      ParentColor = True
-      TabOrder = 0
-    end
-  end
   object Select: TButton
-    Left = 313
+    Left = 426
     Height = 25
-    Top = 320
+    Top = 415
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = '&Select'
     Default = True
     Enabled = False
     OnClick = SelectClick
-    TabOrder = 2
+    TabOrder = 1
   end
   object Button2: TButton
-    Left = 397
+    Left = 510
     Height = 25
-    Top = 320
+    Top = 415
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = '&Cancel'
     ModalResult = 2
-    TabOrder = 3
+    TabOrder = 2
   end
   object Descs: TListBox
     Left = 24
@@ -96,7 +68,7 @@ object ServerSelectForm: TServerSelectForm
     Width = 121
     ItemHeight = 0
     ScrollWidth = 119
-    TabOrder = 4
+    TabOrder = 3
     TopIndex = -1
     Visible = False
   end
@@ -107,7 +79,7 @@ object ServerSelectForm: TServerSelectForm
     Width = 121
     ItemHeight = 0
     ScrollWidth = 119
-    TabOrder = 5
+    TabOrder = 4
     TopIndex = -1
     Visible = False
   end
@@ -118,14 +90,14 @@ object ServerSelectForm: TServerSelectForm
     Width = 121
     ItemHeight = 0
     ScrollWidth = 119
-    TabOrder = 6
+    TabOrder = 5
     TopIndex = -1
     Visible = False
   end
   object AccessCode: TLabeledEdit
     Left = 8
-    Height = 23
-    Top = 318
+    Height = 26
+    Top = 424
     Width = 157
     Anchors = [akLeft, akBottom]
     EditLabel.AnchorSideLeft.Control = AccessCode
@@ -133,14 +105,29 @@ object ServerSelectForm: TServerSelectForm
     EditLabel.AnchorSideRight.Side = asrBottom
     EditLabel.AnchorSideBottom.Control = AccessCode
     EditLabel.Left = 8
-    EditLabel.Height = 13
-    EditLabel.Top = 302
+    EditLabel.Height = 16
+    EditLabel.Top = 405
     EditLabel.Width = 157
     EditLabel.Caption = 'Access Code'
     EditLabel.ParentColor = False
-    TabOrder = 7
+    TabOrder = 6
     Visible = False
     OnChange = AccessCodeChange
+  end
+  object Desc: TMemo
+    Left = 172
+    Height = 372
+    Top = 24
+    Width = 421
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Enabled = False
+    Lines.Strings = (
+      'Desc'
+    )
+    ParentColor = True
+    ReadOnly = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 7
   end
   object Timer1: TTimer
     Enabled = False

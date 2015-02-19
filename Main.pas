@@ -705,7 +705,9 @@ procedure TMainForm.OnMainFormWindowStateChange(Sender: TObject);
 begin
   // wierd bug with gtk have to check prev state
   if (WindowState = wsMinimized) and (pWindowState <> wsMinimized) then begin
-    TrayIcon1.Hint := 'pq';
+    TrayIcon1.Hint := 'Progress Quest'
+      + ' - ' + Get(Traits,'Name')
+      + ' - Level ' + Get(Traits,'Level');
     TrayIcon1.Show;
     Hide;
     ShowInTaskBar := stNever;
@@ -1126,6 +1128,9 @@ begin
   end;
   SaveGame;
   Brag('l');
+  TrayIcon1.Hint := 'Progress Quest'
+    + ' - ' + Get(Traits,'Name')
+    + ' - Level ' + Get(Traits,'Level');
 end;
 
 procedure TMainForm.ClearAllSelections;

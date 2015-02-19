@@ -1,5 +1,5 @@
 object FrontForm: TFrontForm
-  Left = 2903
+  Left = 1420
   Height = 247
   Top = 284
   Width = 496
@@ -34,7 +34,7 @@ object FrontForm: TFrontForm
       Width = 488
       Align = alBottom
       Alignment = taCenter
-      Caption = '© Eric Fredricksen © Progressed Fans :: Version 2015-02-18'
+      Caption = '© Eric Fredricksen © Progressed Fans :: Version 2015-02-19'
       Color = clWhite
       Font.Color = clGrayText
       Font.Height = -11

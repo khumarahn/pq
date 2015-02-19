@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 2697
+  Left = 813
   Height = 706
-  Top = 162
+  Top = 153
   Width = 1044
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
@@ -106,6 +106,8 @@ object MainForm: TMainForm
     Caption = 'Panel4'
     ClientHeight = 38
     ClientWidth = 1044
+    Font.Height = -14
+    ParentFont = False
     TabOrder = 0
     object Kill: TStatusBar
       Left = 1
@@ -153,203 +155,253 @@ object MainForm: TMainForm
       Left = 1
       Height = 666
       Top = 1
-      Width = 228
+      Width = 261
       Align = alLeft
       ClientHeight = 666
-      ClientWidth = 228
+      ClientWidth = 261
       Constraints.MinWidth = 50
       TabOrder = 0
-      object Label1: TLabel
+      object Panel1top: TPanel
         Left = 1
-        Height = 16
+        Height = 167
         Top = 1
-        Width = 226
+        Width = 259
         Align = alTop
-        Caption = 'Character Sheet'
-        ParentColor = False
-      end
-      object Label6: TLabel
-        Left = 1
-        Height = 16
-        Top = 136
-        Width = 226
-        Align = alTop
-        Caption = 'Experience'
-        ParentColor = False
-      end
-      object Label4: TLabel
-        Left = 1
-        Height = 16
-        Top = 376
-        Width = 226
-        Align = alTop
-        Caption = 'Spell Book'
-        ParentColor = False
-      end
-      object Traits: TListView
-        Left = 1
-        Height = 119
-        Top = 17
-        Width = 226
-        Align = alTop
-        Columns = <        
-          item
-            AutoSize = True
-            Caption = 'Trait'
-            MinWidth = 70
-            Width = 70
-          end        
-          item
-            AutoSize = True
-            Caption = 'Value'
-            Width = 154
-          end>
-        ColumnClick = False
-        HideSelection = False
-        Items.LazData = {
-          AB00000004000000FFFFFFFFFFFFFFFFFFFFFFFF01000000040000004E616D65
-          0800000042726F6F707A6F70FFFFFFFFFFFFFFFFFFFFFFFF0100000004000000
-          526163650D00000048616C662048616C666C696E67FFFFFFFFFFFFFFFFFFFFFF
-          FF0100000005000000436C6173730B000000536869762D4B6E69676874FFFFFF
-          FFFFFFFFFFFFFFFFFF01000000050000004C6576656C0100000031FFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFF
-        }
-        ReadOnly = True
-        RowSelect = True
-        ScrollBars = ssAutoBoth
-        TabOrder = 1
-        ViewStyle = vsReport
-      end
-      object Stats: TListView
-        Left = 1
-        Height = 208
-        Top = 168
-        Width = 226
-        Align = alTop
-        Columns = <        
-          item
-            AutoSize = True
-            Caption = 'Stat'
-            MinWidth = 70
-            Width = 70
-          end        
-          item
-            AutoSize = True
-            Caption = 'Value'
-            Width = 154
-          end>
-        ColumnClick = False
-        HideSelection = False
-        Items.LazData = {
-          1401000008000000FFFFFFFFFFFFFFFFFFFFFFFF010000000300000053545202
-          0000003133FFFFFFFFFFFFFFFFFFFFFFFF0100000003000000434F4E02000000
-          3137FFFFFFFFFFFFFFFFFFFFFFFF0100000003000000444558020000003137FF
-          FFFFFFFFFFFFFFFFFFFFFF0100000003000000494E54020000003131FFFFFFFF
-          FFFFFFFFFFFFFFFF0100000003000000574953020000003134FFFFFFFFFFFFFF
-          FFFFFFFFFF0100000003000000434841020000003131FFFFFFFFFFFFFFFFFFFF
-          FFFF01000000060000004D50204D61780100000036FFFFFFFFFFFFFFFFFFFFFF
-          FF01000000060000004850204D61780100000035FFFFFFFFFFFFFFFFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        }
-        ReadOnly = True
-        RowSelect = True
-        ScrollBars = ssAutoBoth
+        Caption = 'Panel1top'
+        ClientHeight = 167
+        ClientWidth = 259
         TabOrder = 0
-        ViewStyle = vsReport
-      end
-      object ExpBar: TProgressBar
-        Left = 1
-        Height = 16
-        Top = 152
-        Width = 226
-        Align = alTop
-        ParentShowHint = False
-        Position = 50
-        ShowHint = True
-        Smooth = True
-        TabOrder = 2
-      end
-      object Spells: TListView
-        Left = 1
-        Height = 245
-        Top = 392
-        Width = 226
-        Align = alClient
-        Columns = <        
-          item
-            AutoSize = True
-            Caption = 'Spell'
-            MinWidth = 70
-            Width = 70
-          end        
-          item
-            AutoSize = True
-            Caption = 'Level'
-            Width = 154
-          end>
-        ColumnClick = False
-        HideSelection = False
-        ReadOnly = True
-        RowSelect = True
-        ScrollBars = ssAutoBoth
-        TabOrder = 3
-        ViewStyle = vsReport
-      end
-      object Cheats: TPanel
-        Left = 1
-        Height = 28
-        Top = 637
-        Width = 226
-        Align = alBottom
-        ClientHeight = 28
-        ClientWidth = 226
-        TabOrder = 4
-        Visible = False
-        object CashIn: TButton
-          Left = 30
-          Height = 25
-          Top = 2
-          Width = 25
-          Caption = '$'
-          OnClick = CashInClick
-          TabOrder = 0
+        object Label1: TLabel
+          Left = 1
+          Height = 16
+          Top = 1
+          Width = 257
+          Align = alTop
+          Caption = 'Character Sheet'
+          ParentColor = False
         end
-        object Button1: TButton
-          Left = 2
-          Height = 25
-          Top = 2
-          Width = 25
-          Caption = 'L+1'
-          OnClick = Button1Click
+        object Label6: TLabel
+          Left = 1
+          Height = 16
+          Top = 134
+          Width = 257
+          Align = alBottom
+          Caption = 'Experience'
+          ParentColor = False
+        end
+        object Traits: TListView
+          Left = 1
+          Height = 117
+          Top = 17
+          Width = 257
+          Align = alClient
+          AutoWidthLastColumn = True
+          BorderStyle = bsNone
+          Columns = <          
+            item
+              Caption = 'Trait'
+              Width = 70
+            end          
+            item
+              Caption = 'Value'
+              Width = 187
+            end>
+          ColumnClick = False
+          HideSelection = False
+          Items.LazData = {
+            AB00000004000000FFFFFFFFFFFFFFFFFFFFFFFF01000000040000004E616D65
+            0800000042726F6F707A6F70FFFFFFFFFFFFFFFFFFFFFFFF0100000004000000
+            526163650D00000048616C662048616C666C696E67FFFFFFFFFFFFFFFFFFFFFF
+            FF0100000005000000436C6173730B000000536869762D4B6E69676874FFFFFF
+            FFFFFFFFFFFFFFFFFF01000000050000004C6576656C0100000031FFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFF
+          }
+          ReadOnly = True
+          RowSelect = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+          ViewStyle = vsReport
+        end
+        object ExpBar: TProgressBar
+          Left = 1
+          Height = 16
+          Top = 150
+          Width = 257
+          Align = alBottom
+          ParentShowHint = False
+          Position = 50
+          ShowHint = True
+          Smooth = True
           TabOrder = 1
         end
-        object FinishQuest: TButton
-          Left = 90
-          Height = 25
-          Top = 2
-          Width = 27
-          Caption = 'Q!'
-          OnClick = FinishQuestClick
-          TabOrder = 2
-        end
-        object Button3: TButton
-          Left = 122
-          Height = 25
-          Top = 2
-          Width = 27
-          Caption = 'X!'
-          OnClick = SpeedButton1Click
-          TabOrder = 3
-        end
-        object CheatPlot: TButton
-          Left = 58
-          Height = 25
+      end
+      object Panel1middle: TPanel
+        Left = 1
+        Height = 210
+        Top = 170
+        Width = 259
+        Align = alTop
+        Caption = 'Panel1middle'
+        ClientHeight = 210
+        ClientWidth = 259
+        TabOrder = 1
+        object Stats: TListView
+          Left = 1
+          Height = 208
           Top = 1
-          Width = 27
-          Caption = 'P!'
-          OnClick = CheatPlotClick
-          TabOrder = 4
+          Width = 257
+          Align = alClient
+          AutoWidthLastColumn = True
+          BorderStyle = bsNone
+          Columns = <          
+            item
+              Caption = 'Stat'
+              Width = 70
+            end          
+            item
+              Caption = 'Value'
+              Width = 187
+            end>
+          ColumnClick = False
+          HideSelection = False
+          Items.LazData = {
+            1401000008000000FFFFFFFFFFFFFFFFFFFFFFFF010000000300000053545202
+            0000003133FFFFFFFFFFFFFFFFFFFFFFFF0100000003000000434F4E02000000
+            3137FFFFFFFFFFFFFFFFFFFFFFFF0100000003000000444558020000003137FF
+            FFFFFFFFFFFFFFFFFFFFFF0100000003000000494E54020000003131FFFFFFFF
+            FFFFFFFFFFFFFFFF0100000003000000574953020000003134FFFFFFFFFFFFFF
+            FFFFFFFFFF0100000003000000434841020000003131FFFFFFFFFFFFFFFFFFFF
+            FFFF01000000060000004D50204D61780100000036FFFFFFFFFFFFFFFFFFFFFF
+            FF01000000060000004850204D61780100000035FFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          }
+          ReadOnly = True
+          RowSelect = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+          ViewStyle = vsReport
         end
+      end
+      object Panel1bottom: TPanel
+        Left = 1
+        Height = 283
+        Top = 382
+        Width = 259
+        Align = alClient
+        Caption = 'Panel1bottom'
+        ClientHeight = 283
+        ClientWidth = 259
+        TabOrder = 2
+        object Label4: TLabel
+          Left = 1
+          Height = 16
+          Top = 1
+          Width = 257
+          Align = alTop
+          Caption = 'Spell Book'
+          ParentColor = False
+        end
+        object Spells: TListView
+          Left = 1
+          Height = 237
+          Top = 17
+          Width = 257
+          Align = alClient
+          AutoWidthLastColumn = True
+          BorderStyle = bsNone
+          Columns = <          
+            item
+              AutoSize = True
+              Caption = 'Spell'
+              MinWidth = 70
+              Width = 70
+            end          
+            item
+              Caption = 'Level'
+              Width = 187
+            end>
+          ColumnClick = False
+          HideSelection = False
+          ReadOnly = True
+          RowSelect = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+          ViewStyle = vsReport
+        end
+        object Cheats: TPanel
+          Left = 1
+          Height = 28
+          Top = 254
+          Width = 257
+          Align = alBottom
+          ClientHeight = 28
+          ClientWidth = 257
+          TabOrder = 1
+          Visible = False
+          object CashIn: TButton
+            Left = 30
+            Height = 25
+            Top = 2
+            Width = 25
+            Caption = '$'
+            OnClick = CashInClick
+            TabOrder = 0
+          end
+          object Button1: TButton
+            Left = 2
+            Height = 25
+            Top = 2
+            Width = 25
+            Caption = 'L+1'
+            OnClick = Button1Click
+            TabOrder = 1
+          end
+          object FinishQuest: TButton
+            Left = 90
+            Height = 25
+            Top = 2
+            Width = 27
+            Caption = 'Q!'
+            OnClick = FinishQuestClick
+            TabOrder = 2
+          end
+          object Button3: TButton
+            Left = 122
+            Height = 25
+            Top = 2
+            Width = 27
+            Caption = 'X!'
+            OnClick = SpeedButton1Click
+            TabOrder = 3
+          end
+          object CheatPlot: TButton
+            Left = 58
+            Height = 25
+            Top = 1
+            Width = 27
+            Caption = 'P!'
+            OnClick = CheatPlotClick
+            TabOrder = 4
+          end
+        end
+      end
+      object Splitter5: TSplitter
+        Cursor = crVSplit
+        Left = 1
+        Height = 2
+        Top = 168
+        Width = 259
+        Align = alTop
+        ResizeAnchor = akTop
+      end
+      object Splitter6: TSplitter
+        Cursor = crVSplit
+        Left = 1
+        Height = 2
+        Top = 380
+        Width = 259
+        Align = alTop
+        ResizeAnchor = akTop
       end
     end
     object Panel3: TPanel
@@ -387,12 +439,13 @@ object MainForm: TMainForm
           Top = 17
           Width = 282
           Align = alClient
+          AutoWidthLastColumn = True
+          BorderStyle = bsNone
           Checkboxes = True
           Columns = <          
             item
-              AutoSize = True
               Caption = 'Act'
-              Width = 280
+              Width = 282
             end>
           ColumnClick = False
           HideSelection = False
@@ -420,12 +473,12 @@ object MainForm: TMainForm
       end
       object Panel3bottom: TPanel
         Left = 1
-        Height = 400
-        Top = 265
+        Height = 399
+        Top = 266
         Width = 284
         Align = alClient
         Caption = 'Panel3bottom'
-        ClientHeight = 400
+        ClientHeight = 399
         ClientWidth = 284
         TabOrder = 1
         object Label3: TLabel
@@ -440,7 +493,7 @@ object MainForm: TMainForm
         object QuestBar: TProgressBar
           Left = 1
           Height = 16
-          Top = 383
+          Top = 382
           Width = 282
           Align = alBottom
           Max = 0
@@ -451,16 +504,17 @@ object MainForm: TMainForm
         end
         object Quests: TListView
           Left = 1
-          Height = 366
+          Height = 365
           Top = 17
           Width = 282
           Align = alClient
+          AutoWidthLastColumn = True
+          BorderStyle = bsNone
           Checkboxes = True
           Columns = <          
             item
-              AutoSize = True
               Caption = 'Quest'
-              Width = 280
+              Width = 282
             end>
           ColumnClick = False
           HideSelection = False
@@ -477,7 +531,7 @@ object MainForm: TMainForm
       object Splitter3: TSplitter
         Cursor = crVSplit
         Left = 1
-        Height = 1
+        Height = 2
         Top = 264
         Width = 284
         Align = alTop
@@ -485,183 +539,214 @@ object MainForm: TMainForm
       end
     end
     object Panel2: TPanel
-      Left = 230
+      Left = 264
       Height = 666
       Top = 1
-      Width = 526
+      Width = 491
       Align = alClient
       ClientHeight = 666
-      ClientWidth = 526
+      ClientWidth = 491
       TabOrder = 2
-      object InventoryLabelAlsoGameStyle: TLabel
-        Left = 1
-        Height = 16
-        Top = 264
-        Width = 524
-        Align = alTop
-        Caption = 'Inventory'
-        ParentColor = False
-      end
-      object Label7: TLabel
-        Left = 1
-        Height = 16
-        Top = 633
-        Width = 524
-        Align = alBottom
-        Caption = 'Encumbrance'
-        ParentColor = False
-      end
-      object Label8: TLabel
-        Left = 1
-        Height = 16
-        Top = 1
-        Width = 524
-        Align = alTop
-        Caption = 'Equipment'
-        ParentColor = False
-      end
-      object Inventory: TListView
-        Left = 1
-        Height = 353
-        Top = 280
-        Width = 524
-        Align = alClient
-        Columns = <        
-          item
-            AutoSize = True
-            Caption = 'Item'
-            Width = 40
-          end        
-          item
-            Alignment = taRightJustify
-            AutoSize = True
-            Caption = 'Qty'
-            Width = 482
-          end>
-        ColumnClick = False
-        HideSelection = False
-        ReadOnly = True
-        RowSelect = True
-        ScrollBars = ssAutoBoth
-        TabOrder = 0
-        ViewStyle = vsReport
-      end
       object EncumBar: TProgressBar
         Left = 1
         Height = 16
         Top = 649
-        Width = 524
+        Width = 489
         Align = alBottom
         ParentShowHint = False
         Position = 50
         ShowHint = True
         Smooth = True
-        TabOrder = 1
+        TabOrder = 0
       end
-      object Equips: TListView
-        AnchorSideBottom.Side = asrBottom
+      object Panel2top: TPanel
         Left = 1
-        Height = 247
-        Top = 17
-        Width = 524
+        Height = 275
+        Top = 1
+        Width = 489
         Align = alTop
-        Columns = <        
-          item
-            AutoSize = True
-            Caption = 'Position'
-            MinWidth = 120
-            Width = 120
-          end        
-          item
-            AutoSize = True
-            Caption = 'Equipped'
-            Width = 402
-          end>
-        ColumnClick = False
-        HideSelection = False
-        Items.LazData = {
-          990100000B000000FFFFFFFFFFFFFFFFFFFFFFFF010000000600000057656170
-          6F6E0B000000486561767920537469636BFFFFFFFFFFFFFFFFFFFFFFFF010000
-          0006000000536869656C6400000000FFFFFFFFFFFFFFFFFFFFFFFF0100000004
-          00000048656C6D00000000FFFFFFFFFFFFFFFFFFFFFFFF010000000700000048
-          61756265726B00000000FFFFFFFFFFFFFFFFFFFFFFFF010000000A0000004272
-          617373616972747300000000FFFFFFFFFFFFFFFFFFFFFFFF0100000009000000
-          56616D62726163657300000000FFFFFFFFFFFFFFFFFFFFFFFF01000000090000
-          004761756E746C65747300000000FFFFFFFFFFFFFFFFFFFFFFFF010000000800
-          000047616D6265736F6E00000000FFFFFFFFFFFFFFFFFFFFFFFF010000000700
-          00004375697373657300000000FFFFFFFFFFFFFFFFFFFFFFFF01000000070000
-          004772656176657300000000FFFFFFFFFFFFFFFFFFFFFFFF0100000009000000
-          536F6C6C657265747300000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        }
-        ReadOnly = True
-        RowSelect = True
-        ScrollBars = ssAutoBoth
-        ShowColumnHeaders = False
-        TabOrder = 2
-        ViewStyle = vsReport
-      end
-      object vars: TPanel
-        AnchorSideRight.Control = Panel2
-        AnchorSideRight.Side = asrBottom
-        AnchorSideBottom.Control = Equips
-        AnchorSideBottom.Side = asrBottom
-        Left = 474
-        Height = 107
-        Top = 157
-        Width = 51
-        Anchors = [akRight, akBottom]
-        AutoSize = True
-        Caption = 'vars'
-        ClientHeight = 107
-        ClientWidth = 51
-        TabOrder = 3
-        Visible = False
-        object fTask: TLabel
-          Left = 1
-          Height = 13
-          Top = 1
-          Width = 27
-          AutoSize = False
-          Caption = 'fTask'
-          Color = clMoneyGreen
-          ParentColor = False
-          Transparent = False
-        end
-        object fQuest: TLabel
-          Left = 1
-          Height = 13
-          Top = 21
-          Width = 31
-          AutoSize = False
-          Caption = 'fQuest'
-          Color = clSkyBlue
-          ParentColor = False
-          Transparent = False
-        end
-        object fQueue: TListBox
-          Left = 1
-          Height = 45
-          Top = 61
-          Width = 49
-          ItemHeight = 0
-          ScrollWidth = 47
+        Caption = 'Panel2top'
+        ClientHeight = 275
+        ClientWidth = 489
+        TabOrder = 1
+        object vars: TPanel
+          AnchorSideRight.Control = Panel2
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = Equips
+          AnchorSideBottom.Side = asrBottom
+          Left = 793
+          Height = 107
+          Top = 167
+          Width = 51
+          Anchors = [akRight, akBottom]
+          AutoSize = True
+          Caption = 'vars'
+          ClientHeight = 107
+          ClientWidth = 51
           TabOrder = 0
-          TopIndex = -1
+          Visible = False
+          object fTask: TLabel
+            Left = 1
+            Height = 13
+            Top = 1
+            Width = 27
+            AutoSize = False
+            Caption = 'fTask'
+            Color = clMoneyGreen
+            ParentColor = False
+            Transparent = False
+          end
+          object fQuest: TLabel
+            Left = 1
+            Height = 13
+            Top = 21
+            Width = 31
+            AutoSize = False
+            Caption = 'fQuest'
+            Color = clSkyBlue
+            ParentColor = False
+            Transparent = False
+          end
+          object fQueue: TListBox
+            Left = 1
+            Height = 45
+            Top = 61
+            Width = 49
+            ItemHeight = 0
+            ScrollWidth = 47
+            TabOrder = 0
+            TopIndex = -1
+          end
         end
+        object Equips: TListView
+          Left = 1
+          Height = 257
+          Top = 17
+          Width = 487
+          Align = alClient
+          AutoWidthLastColumn = True
+          BorderStyle = bsNone
+          Columns = <          
+            item
+              Caption = 'Position'
+              MinWidth = 120
+              Width = 120
+            end          
+            item
+              Caption = 'Equipped'
+              Width = 367
+            end>
+          ColumnClick = False
+          HideSelection = False
+          Items.LazData = {
+            990100000B000000FFFFFFFFFFFFFFFFFFFFFFFF010000000600000057656170
+            6F6E0B000000486561767920537469636BFFFFFFFFFFFFFFFFFFFFFFFF010000
+            0006000000536869656C6400000000FFFFFFFFFFFFFFFFFFFFFFFF0100000004
+            00000048656C6D00000000FFFFFFFFFFFFFFFFFFFFFFFF010000000700000048
+            61756265726B00000000FFFFFFFFFFFFFFFFFFFFFFFF010000000A0000004272
+            617373616972747300000000FFFFFFFFFFFFFFFFFFFFFFFF0100000009000000
+            56616D62726163657300000000FFFFFFFFFFFFFFFFFFFFFFFF01000000090000
+            004761756E746C65747300000000FFFFFFFFFFFFFFFFFFFFFFFF010000000800
+            000047616D6265736F6E00000000FFFFFFFFFFFFFFFFFFFFFFFF010000000700
+            00004375697373657300000000FFFFFFFFFFFFFFFFFFFFFFFF01000000070000
+            004772656176657300000000FFFFFFFFFFFFFFFFFFFFFFFF0100000009000000
+            536F6C6C657265747300000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          }
+          ReadOnly = True
+          RowSelect = True
+          ScrollBars = ssAutoBoth
+          ShowColumnHeaders = False
+          TabOrder = 1
+          ViewStyle = vsReport
+        end
+        object Label8: TLabel
+          Left = 1
+          Height = 16
+          Top = 1
+          Width = 487
+          Align = alTop
+          Caption = 'Equipment'
+          ParentColor = False
+        end
+      end
+      object Panel2bottom: TPanel
+        Left = 1
+        Height = 371
+        Top = 278
+        Width = 489
+        Align = alClient
+        Caption = 'Panel2bottom'
+        ClientHeight = 371
+        ClientWidth = 489
+        TabOrder = 2
+        object Label7: TLabel
+          Left = 1
+          Height = 16
+          Top = 354
+          Width = 487
+          Align = alBottom
+          Caption = 'Encumbrance'
+          ParentColor = False
+        end
+        object Inventory: TListView
+          Left = 1
+          Height = 337
+          Top = 17
+          Width = 487
+          Align = alClient
+          AutoWidthLastColumn = True
+          BorderStyle = bsNone
+          Columns = <          
+            item
+              AutoSize = True
+              Caption = 'Item'
+              Width = 40
+            end          
+            item
+              Alignment = taRightJustify
+              Caption = 'Qty'
+              Width = 447
+            end>
+          ColumnClick = False
+          HideSelection = False
+          ReadOnly = True
+          RowSelect = True
+          ScrollBars = ssAutoBoth
+          TabOrder = 0
+          ViewStyle = vsReport
+        end
+        object InventoryLabelAlsoGameStyle: TLabel
+          Left = 1
+          Height = 16
+          Top = 1
+          Width = 487
+          Align = alTop
+          Caption = 'Inventory'
+          ParentColor = False
+        end
+      end
+      object Splitter4: TSplitter
+        Cursor = crVSplit
+        Left = 1
+        Height = 2
+        Top = 276
+        Width = 489
+        Align = alTop
+        ResizeAnchor = akTop
       end
     end
     object Splitter1: TSplitter
-      Left = 229
+      Left = 262
       Height = 666
       Top = 1
-      Width = 1
+      Width = 2
     end
     object Splitter2: TSplitter
-      Left = 756
+      Left = 755
       Height = 666
       Top = 1
-      Width = 1
+      Width = 2
       Align = alRight
       ResizeAnchor = akRight
     end

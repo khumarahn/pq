@@ -4,6 +4,7 @@
   * taskbar icon and hint
   * proxy?
   * very large experience and spell levels?
+  * autosize last columns?
 }
 
 unit Main;
@@ -65,6 +66,11 @@ type
     Panel3: TPanel;
     Panel3top: TPanel;
     Panel3bottom: TPanel;
+    Panel2top: TPanel;
+    Panel2bottom: TPanel;
+    Panel1top: TPanel;
+    Panel1middle: TPanel;
+    Panel1bottom: TPanel;
     PlotBar: TProgressBar;
     Plots: TListView;
     QuestBar: TProgressBar;
@@ -75,6 +81,9 @@ type
     Splitter1: TSplitter;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
+    Splitter4: TSplitter;
+    Splitter5: TSplitter;
+    Splitter6: TSplitter;
     Stats: TListView;
     TaskBar: TProgressBar;
     Timer1: TTimer;
@@ -1176,7 +1185,7 @@ begin
       Dequeue();
     end else begin
       elapsed := LongInt(GetTickCount) - LongInt(Timer1.Tag);
-      if elapsed > 100 then elapsed := 100;
+      if elapsed > 200 then elapsed := 200;
       if elapsed < 0 then elapsed := 0;
       TaskBar.Position := TaskBar.Position + elapsed;
     end;

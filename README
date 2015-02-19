@@ -14,8 +14,11 @@ is probably needed. And yes - it _may_ kill your kittens.
 Binaries for Windows and Linux are in the Downloads section.
 
 Compilation instructions:
+
 * install Lazarus http://www.lazarus.freepascal.org/
+
 * download these sources
+
 * open file pq.lpr with Lazarus
-* hit Shift+f9 (or Menu->Run->Build) to produce an executable ('pq' for 
-Linux, 'pq.exe' for Windows)
+
+* hit Shift+f9 (or Menu->Run->Build) to produce an executable ('pq' for Linux, 'pq.exe' for Windows)

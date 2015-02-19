@@ -1,14 +1,14 @@
 object FrontForm: TFrontForm
-  Left = 805
-  Height = 255
-  Top = 750
-  Width = 452
+  Left = 2903
+  Height = 247
+  Top = 284
+  Width = 496
   AlphaBlendValue = 100
   BorderIcons = []
   BorderStyle = bsNone
   BorderWidth = 2
-  ClientHeight = 255
-  ClientWidth = 452
+  ClientHeight = 247
+  ClientWidth = 496
   Color = clRed
   Font.Color = clWindowText
   Font.Height = -11
@@ -17,45 +17,43 @@ object FrontForm: TFrontForm
   LCLVersion = '1.2.6.0'
   object Panel1: TPanel
     Left = 2
-    Height = 251
+    Height = 243
     Top = 2
-    Width = 448
+    Width = 492
     Align = alClient
     BevelInner = bvLowered
-    ClientHeight = 251
-    ClientWidth = 448
+    ClientHeight = 243
+    ClientWidth = 492
     Color = clWhite
     ParentColor = False
     TabOrder = 0
     object Label2: TLabel
       Left = 2
       Height = 13
-      Top = 236
-      Width = 444
+      Top = 228
+      Width = 488
       Align = alBottom
       Alignment = taCenter
-      Caption = '© 2003 Eric Fredricksen - v6.3'
+      Caption = '© Eric Fredricksen © Progressed Fans :: Version 2015-02-18'
       Color = clWhite
-      Font.Color = 11382189
+      Font.Color = clGrayText
       Font.Height = -11
-      Font.Name = 'MS Sans Serif'
       ParentColor = False
       ParentFont = False
       Transparent = False
     end
     object HomeLink: TLabel
       Cursor = crHandPoint
-      Left = 258
+      Left = 296
       Height = 23
-      Top = 206
+      Top = 205
       Width = 172
       Alignment = taCenter
       AutoSize = False
       Caption = 'http://progressquest.com/'
       Font.CharSet = ANSI_CHARSET
       Font.Color = clBlue
-      Font.Height = -16
-      Font.Name = 'Times New Roman'
+      Font.Height = -11
       Font.Style = [fsUnderline]
       ParentColor = False
       ParentFont = False
@@ -74,51 +72,54 @@ object FrontForm: TFrontForm
     end
     object Button1: TButton
       Left = 269
-      Height = 25
-      Top = 26
-      Width = 154
+      Height = 33
+      Top = 16
+      Width = 211
       Caption = '&New Game (Single player)'
       ModalResult = 1
       TabOrder = 0
     end
     object Button2: TButton
       Left = 269
-      Height = 25
+      Height = 34
       Top = 110
-      Width = 154
+      Width = 211
       Caption = '&Load Game'
       ModalResult = 4
       TabOrder = 1
     end
     object Button4: TButton
       Left = 269
-      Height = 25
+      Height = 34
       Top = 158
-      Width = 154
+      Width = 211
       Caption = 'E&xit'
       ModalResult = 2
       TabOrder = 2
     end
     object Button3: TButton
       Left = 269
-      Height = 25
+      Height = 34
       Top = 62
-      Width = 154
+      Width = 211
       Caption = 'New Game (&Multiplayer)'
       ModalResult = 10
       TabOrder = 3
     end
     object Panel2: TPanel
       Left = 2
-      Height = 234
+      Height = 226
       Top = 2
       Width = 251
       Align = alLeft
       BevelOuter = bvNone
       BorderWidth = 10
       Caption = 'Panel2'
-      ClientHeight = 234
+      ClientHeight = 226
       ClientWidth = 251
+      Font.Color = clWindowText
+      Font.Height = -11
+      ParentFont = False
       TabOrder = 4
       object Logo: TImage
         Cursor = crHandPoint
@@ -4413,16 +4414,14 @@ object FrontForm: TFrontForm
       end
       object Label3: TLabel
         Left = 10
-        Height = 17
+        Height = 13
         Top = 210
         Width = 231
         Align = alTop
         Alignment = taCenter
         Caption = 'progressus imprimis'
-        Font.CharSet = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
-        Font.Name = 'Times New Roman'
+        Font.Height = -11
         Font.Style = [fsItalic]
         ParentColor = False
         ParentFont = False
@@ -4430,8 +4429,8 @@ object FrontForm: TFrontForm
     end
   end
   object OpenDialog1: TOpenDialog
-    DefaultExt = '.pq3'
-    Filter = 'Progress Quest games|*.pq3'
+    DefaultExt = '.lpq'
+    Filter = 'Progress Quest Saves|*.lpq;*.pq;*.pq3|All Files|*.*'
     left = 476
     top = 240
   end

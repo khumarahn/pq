@@ -1,11 +1,11 @@
 object LoginForm: TLoginForm
   Left = 1423
-  Height = 448
+  Height = 462
   Top = 29
-  Width = 265
+  Width = 270
   Caption = 'Progress Quest Login'
-  ClientHeight = 448
-  ClientWidth = 265
+  ClientHeight = 462
+  ClientWidth = 270
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
@@ -13,9 +13,9 @@ object LoginForm: TLoginForm
   Position = poScreenCenter
   LCLVersion = '1.2.6.0'
   object GroupBox1: TGroupBox
-    Left = 12
+    Left = 16
     Height = 69
-    Top = 176
+    Top = 200
     Width = 237
     Caption = 'New Users'
     ClientHeight = 54
@@ -55,9 +55,9 @@ object LoginForm: TLoginForm
     end
   end
   object Login: TButton
-    Left = 88
+    Left = 96
     Height = 25
-    Top = 388
+    Top = 424
     Width = 75
     Caption = 'Login'
     Default = True
@@ -66,26 +66,26 @@ object LoginForm: TLoginForm
     TabOrder = 1
   end
   object Button1: TButton
-    Left = 172
+    Left = 178
     Height = 25
-    Top = 388
+    Top = 424
     Width = 75
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
   end
   object GroupBox2: TGroupBox
-    Left = 12
-    Height = 121
-    Top = 256
+    Left = 16
+    Height = 137
+    Top = 280
     Width = 237
     Caption = 'Proxy Settings'
-    ClientHeight = 106
+    ClientHeight = 122
     ClientWidth = 233
     TabOrder = 3
     object Label3: TLabel
       Left = 10
-      Height = 45
+      Height = 61
       Top = 6
       Width = 213
       AutoSize = False
@@ -94,34 +94,34 @@ object LoginForm: TLoginForm
       WordWrap = True
     end
     object LabeledEdit1: TLabeledEdit
-      Left = 10
+      Left = 8
       Height = 23
-      Top = 70
+      Top = 88
       Width = 149
       EditLabel.AnchorSideLeft.Control = LabeledEdit1
       EditLabel.AnchorSideRight.Control = LabeledEdit1
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = LabeledEdit1
-      EditLabel.Left = 10
+      EditLabel.Left = 8
       EditLabel.Height = 13
-      EditLabel.Top = 54
+      EditLabel.Top = 72
       EditLabel.Width = 149
       EditLabel.Caption = 'Server'
       EditLabel.ParentColor = False
       TabOrder = 0
     end
     object LabeledEdit2: TLabeledEdit
-      Left = 162
+      Left = 166
       Height = 23
-      Top = 70
+      Top = 88
       Width = 57
       EditLabel.AnchorSideLeft.Control = LabeledEdit2
       EditLabel.AnchorSideRight.Control = LabeledEdit2
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = LabeledEdit2
-      EditLabel.Left = 162
+      EditLabel.Left = 166
       EditLabel.Height = 13
-      EditLabel.Top = 54
+      EditLabel.Top = 72
       EditLabel.Width = 57
       EditLabel.Caption = 'Port'
       EditLabel.ParentColor = False
@@ -129,17 +129,17 @@ object LoginForm: TLoginForm
     end
   end
   object GroupBox3: TGroupBox
-    Left = 12
-    Height = 157
-    Top = 12
+    Left = 16
+    Height = 184
+    Top = 8
     Width = 237
     Caption = 'Account Info'
-    ClientHeight = 142
+    ClientHeight = 169
     ClientWidth = 233
     TabOrder = 4
     object Label4: TLabel
       Left = 6
-      Height = 45
+      Height = 74
       Top = 6
       Width = 221
       AutoSize = False
@@ -150,7 +150,7 @@ object LoginForm: TLoginForm
     object Account: TLabeledEdit
       Left = 6
       Height = 23
-      Top = 70
+      Top = 96
       Width = 221
       EditLabel.AnchorSideLeft.Control = Account
       EditLabel.AnchorSideRight.Control = Account
@@ -158,7 +158,7 @@ object LoginForm: TLoginForm
       EditLabel.AnchorSideBottom.Control = Account
       EditLabel.Left = 6
       EditLabel.Height = 13
-      EditLabel.Top = 54
+      EditLabel.Top = 80
       EditLabel.Width = 221
       EditLabel.Caption = 'Account'
       EditLabel.ParentColor = False
@@ -168,7 +168,7 @@ object LoginForm: TLoginForm
     object Password: TLabeledEdit
       Left = 6
       Height = 23
-      Top = 110
+      Top = 144
       Width = 221
       EchoMode = emPassword
       EditLabel.AnchorSideLeft.Control = Password
@@ -177,7 +177,7 @@ object LoginForm: TLoginForm
       EditLabel.AnchorSideBottom.Control = Password
       EditLabel.Left = 6
       EditLabel.Height = 13
-      EditLabel.Top = 94
+      EditLabel.Top = 128
       EditLabel.Width = 221
       EditLabel.Caption = 'Password'
       EditLabel.ParentColor = False

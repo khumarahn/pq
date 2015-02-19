@@ -13,14 +13,14 @@ unit Main;
 { copyright (c)2002 Eric Fredricksen all rights reserved  }
 { copyright (c) 2015 Alexey Korepanov all rights reserved }
 
-{$DEFINE CHEATS}
-{$DEFINE LOGGING}
+{$UNDEF CHEATS}
+{$UNDEF LOGGING}
 
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, ImgList, Menus, FileUtil, StreamZlib, Saves;
+  LCLIntf, LCLType, LMessages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, Menus, FileUtil, StreamZlib, Saves;
 
 const
   // revs:
@@ -173,8 +173,7 @@ function Split(s: String; field: Integer; separator: String): String; overload;
 
 implementation
 
-uses Web, StrUtils, NewGuy, Math, Config, Front, SelServ, Login,
-  Registry;
+uses Web, StrUtils, NewGuy, Math, Config, Front, SelServ, Registry;
 
 {$R *.lfm}
 
@@ -429,6 +428,7 @@ var
   m: String;
 begin
   lev := 0;  // shut up, compiler hint
+  Result := '';  // yeah shut up
   for i := 1 to 5 do begin
     m := Pick(K.Monsters.Lines);
     if (Result = '') or (abs(level-StrToInt(Split(m,1))) < abs(level-lev)) then begin
@@ -694,7 +694,7 @@ end;
 
 procedure TMainForm.OnMainFormWindowStateChange(Sender: TObject);
 begin
-  // weird bug with gtk have to check prev state
+  // wierd bug with gtk have to check prev state
   if (WindowState = wsMinimized) and (pWindowState <> wsMinimized) then begin
     TrayIcon1.Hint := 'pq';
     TrayIcon1.Show;
@@ -1174,14 +1174,14 @@ begin
       //PlotBar.Hint := FormatDateTime('h:mm:ss" remaining"',(PlotBar.Max-PlotBar.Position) / (24.0 * 60 * 60));
 
       Dequeue();
-    end else with TaskBar do begin
-      elapsed := LongInt(GetTickCount { *Converted from TimeGetTime* }) - LongInt(Timer1.Tag);
+    end else begin
+      elapsed := LongInt(GetTickCount) - LongInt(Timer1.Tag);
       if elapsed > 100 then elapsed := 100;
       if elapsed < 0 then elapsed := 0;
-      Position := Position + elapsed;
+      TaskBar.Position := TaskBar.Position + elapsed;
     end;
   end;
-  Timer1.Tag := GetTickCount; { *Converted from TimeGetTime* }
+  Timer1.Tag := GetTickCount;
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -1197,6 +1197,8 @@ begin
   FMakeBackups := true;
   FMinToTray := true;
   FExportSheets := false;
+
+  TaskBar.DoubleBuffered := True;
 end;
 
 procedure TMainForm.SpeedButton1Click(Sender: TObject);
@@ -1775,6 +1777,7 @@ end;
 initialization
 
 end.
+
 
 
 

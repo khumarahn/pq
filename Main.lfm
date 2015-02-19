@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 654
+  Left = 2697
   Height = 706
-  Top = 205
+  Top = 162
   Width = 1044
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
@@ -125,6 +125,7 @@ object MainForm: TMainForm
       Top = 21
       Width = 1042
       Align = alBottom
+      ParentShowHint = False
       Position = 50
       Smooth = True
       Step = 1
@@ -419,12 +420,12 @@ object MainForm: TMainForm
       end
       object Panel3bottom: TPanel
         Left = 1
-        Height = 396
-        Top = 269
+        Height = 400
+        Top = 265
         Width = 284
         Align = alClient
         Caption = 'Panel3bottom'
-        ClientHeight = 396
+        ClientHeight = 400
         ClientWidth = 284
         TabOrder = 1
         object Label3: TLabel
@@ -439,7 +440,7 @@ object MainForm: TMainForm
         object QuestBar: TProgressBar
           Left = 1
           Height = 16
-          Top = 379
+          Top = 383
           Width = 282
           Align = alBottom
           Max = 0
@@ -450,7 +451,7 @@ object MainForm: TMainForm
         end
         object Quests: TListView
           Left = 1
-          Height = 362
+          Height = 366
           Top = 17
           Width = 282
           Align = alClient
@@ -476,7 +477,7 @@ object MainForm: TMainForm
       object Splitter3: TSplitter
         Cursor = crVSplit
         Left = 1
-        Height = 5
+        Height = 1
         Top = 264
         Width = 284
         Align = alTop
@@ -484,19 +485,19 @@ object MainForm: TMainForm
       end
     end
     object Panel2: TPanel
-      Left = 234
+      Left = 230
       Height = 666
       Top = 1
-      Width = 518
+      Width = 526
       Align = alClient
       ClientHeight = 666
-      ClientWidth = 518
+      ClientWidth = 526
       TabOrder = 2
       object InventoryLabelAlsoGameStyle: TLabel
         Left = 1
         Height = 16
         Top = 264
-        Width = 516
+        Width = 524
         Align = alTop
         Caption = 'Inventory'
         ParentColor = False
@@ -505,7 +506,7 @@ object MainForm: TMainForm
         Left = 1
         Height = 16
         Top = 633
-        Width = 516
+        Width = 524
         Align = alBottom
         Caption = 'Encumbrance'
         ParentColor = False
@@ -514,7 +515,7 @@ object MainForm: TMainForm
         Left = 1
         Height = 16
         Top = 1
-        Width = 516
+        Width = 524
         Align = alTop
         Caption = 'Equipment'
         ParentColor = False
@@ -523,7 +524,7 @@ object MainForm: TMainForm
         Left = 1
         Height = 353
         Top = 280
-        Width = 516
+        Width = 524
         Align = alClient
         Columns = <        
           item
@@ -535,7 +536,7 @@ object MainForm: TMainForm
             Alignment = taRightJustify
             AutoSize = True
             Caption = 'Qty'
-            Width = 474
+            Width = 482
           end>
         ColumnClick = False
         HideSelection = False
@@ -549,7 +550,7 @@ object MainForm: TMainForm
         Left = 1
         Height = 16
         Top = 649
-        Width = 516
+        Width = 524
         Align = alBottom
         ParentShowHint = False
         Position = 50
@@ -562,7 +563,7 @@ object MainForm: TMainForm
         Left = 1
         Height = 247
         Top = 17
-        Width = 516
+        Width = 524
         Align = alTop
         Columns = <        
           item
@@ -574,7 +575,7 @@ object MainForm: TMainForm
           item
             AutoSize = True
             Caption = 'Equipped'
-            Width = 394
+            Width = 402
           end>
         ColumnClick = False
         HideSelection = False
@@ -605,7 +606,7 @@ object MainForm: TMainForm
         AnchorSideRight.Side = asrBottom
         AnchorSideBottom.Control = Equips
         AnchorSideBottom.Side = asrBottom
-        Left = 466
+        Left = 474
         Height = 107
         Top = 157
         Width = 51
@@ -654,13 +655,13 @@ object MainForm: TMainForm
       Left = 229
       Height = 666
       Top = 1
-      Width = 5
+      Width = 1
     end
     object Splitter2: TSplitter
-      Left = 752
+      Left = 756
       Height = 666
       Top = 1
-      Width = 5
+      Width = 1
       Align = alRight
       ResizeAnchor = akRight
     end

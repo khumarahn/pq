@@ -5,7 +5,7 @@ unit Login;
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls{, Psock, NMHttp};
 
 type
@@ -59,4 +59,4 @@ begin
     ModalResult := mrOk;
 end;
 
-end.
+end.

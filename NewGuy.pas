@@ -7,8 +7,8 @@ unit NewGuy;
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, ComCtrls, URIParser;
+  LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
 
 type
   TNewGuyForm = class(TForm)
@@ -64,7 +64,7 @@ function GenerateName: string;
 
 implementation
 
-uses Main, SelServ, StrUtils, Web, Config;
+uses Main, StrUtils, Web, Config;
 
 {$R *.lfm}
 
@@ -224,12 +224,14 @@ var
   var
     count, i: Integer;
   begin
+    Result := '';
     count := 1;
     for i := 0 to Length(s)-1 do
       if s[i] = '|' then Inc(count);
     Result := Split(s, Random(count));
   end;
 begin
+  Result := '';
   for i := 0 to 5 do
     Result := Result + Pick(KParts[i mod 3]);
   Result := UpperCase(Copy(Result,1,1)) + Copy(Result,2,Length(Result));
@@ -260,4 +262,5 @@ begin
     Klass.Items.Add(Split(K.Klasses.Lines[i],0));
 end;
 
-end.
+end.
+

@@ -80,8 +80,9 @@ type TSave = class(TCollectionItem)
     procedure Dump(f: TStream);
     procedure Load(f: TStream);
     procedure LoadDfm(f: TStream);
-    constructor Create;
+    constructor Create; overload;
   published
+
     property Label1_Hint: String read mLabel1_Hint write mLabel1_Hint;
 
     property Traits_Tag: LongInt read mTraits_Tag write mTraits_Tag;
@@ -186,7 +187,6 @@ implementation
   procedure TSave.Load(f: TStream);
   var
     JS: TJSONDeStreamer;
-    j: TJSONData;
   begin
     JS := TJSONDeStreamer.Create(Nil);
     JS.JSONToObject(f.ReadAnsiString, Self);
@@ -196,14 +196,8 @@ implementation
   var
     Reader: TBinaryObjectReader;
     ValueType: TValueType;
-    v_string: string;
-    v_ustring: UnicodeString;
-    v_int8: ShortInt;
-    v_int16: SmallInt;
-    v_int32: LongInt;
-    i,j: integer;
+    i: integer;
     v_class, v_class_type, v_name, v_value, v_type: string;
-    v_case: string;
     v_binary: TMemoryStream;
     b_dword, b_size: LongInt;
     b_byte: ShortInt;
@@ -462,6 +456,7 @@ implementation
     {$IFDEF PQSAVES_DEBUG}
     writeln('Done, world!');
     {$ENDIF}
+    v_class_type := v_class_type; v_type := v_type; b_dword := b_dword; // suppressing compiler warnings
   end;
 
 

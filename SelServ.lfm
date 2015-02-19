@@ -1,12 +1,12 @@
 object ServerSelectForm: TServerSelectForm
-  Left = 1214
+  Left = 2360
   Height = 476
-  Top = 165
+  Top = 269
   Width = 603
   Caption = 'Progress Quest - Select Realm'
   ClientHeight = 476
   ClientWidth = 603
-  Color = clBtnFace
+  Color = clForm
   ParentFont = True
   Position = poScreenCenter
   LCLVersion = '1.2.6.0'
@@ -120,11 +120,10 @@ object ServerSelectForm: TServerSelectForm
     Top = 24
     Width = 421
     Anchors = [akTop, akLeft, akRight, akBottom]
-    Enabled = False
+    Color = clForm
     Lines.Strings = (
       'Desc'
     )
-    ParentColor = True
     ReadOnly = True
     ScrollBars = ssAutoBoth
     TabOrder = 7

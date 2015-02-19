@@ -36,7 +36,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="9">
       <Unit0>
         <Filename Value="pq.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -87,23 +87,15 @@
         <UnitName Value="Web"/>
       </Unit6>
       <Unit7>
-        <Filename Value="Login.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="LoginForm"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Login"/>
-      </Unit7>
-      <Unit8>
         <Filename Value="StreamZlib.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="StreamZlib"/>
-      </Unit8>
-      <Unit9>
+      </Unit7>
+      <Unit8>
         <Filename Value="Saves.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Saves"/>
-      </Unit9>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -118,8 +110,17 @@
     </Parsing>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
+      <RelocatableUnit Value="True"/>
+      <Optimizations>
+        <OptimizationLevel Value="3"/>
+      </Optimizations>
     </CodeGeneration>
     <Linking>
+      <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <StripSymbols Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>

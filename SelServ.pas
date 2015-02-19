@@ -7,8 +7,8 @@ unit SelServ;
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Forms, Dialogs, StdCtrls, ExtCtrls,
-  ComCtrls, Controls, Classes;
+  LCLIntf, LCLType, SysUtils, Forms, Dialogs, StdCtrls, ExtCtrls,
+  Controls, Classes;
 
 type
 
@@ -46,7 +46,7 @@ function Take(var s: String): String;
 
 implementation
 
-uses NewGuy, Login, Main, Web;
+uses NewGuy, Main, Web;
 
 {$R *.lfm}
 
@@ -89,8 +89,8 @@ end;
 
 procedure TServerSelectForm.ServersClick(Sender: TObject);
 begin
-  Desc.Lines.Clear;
-  Desc.Lines.Add(Descs.Items[Servers.ItemIndex]);
+  Desc.Lines.SetText(PChar(Descs.Items[Servers.ItemIndex]));
+  //StringReplace(Descs.Items[Servers.ItemIndex], #13,'',[rfReplaceAll]);
   AccessCode.Visible := (CurrentOpts and 8) > 0;
   AccessCodeChange(Sender);
 end;

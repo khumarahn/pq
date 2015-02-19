@@ -7,7 +7,7 @@ unit Front;
 interface
 
 uses
-  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls;
 
 type
@@ -33,8 +33,6 @@ var
 
 implementation
 
-uses Main, Info;
-
 {$R *.lfm}
 
 procedure TFrontForm.HomeLinkClick(Sender: TObject);
@@ -47,4 +45,4 @@ begin
   OpenURL('http://progressquest.com/'); { *Converted from ShellExecute* }
 end;
 
-end.
+end.

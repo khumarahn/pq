@@ -91,7 +91,7 @@ object FrontForm: TFrontForm
     object Button4: TButton
       Left = 269
       Height = 34
-      Top = 158
+      Top = 160
       Width = 211
       Caption = 'E&xit'
       ModalResult = 2

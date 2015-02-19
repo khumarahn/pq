@@ -5,6 +5,7 @@ syntax: glob
 *.obj
 *.a
 pq
+pq.exe
 pq.compiled
 *.o
 *.or

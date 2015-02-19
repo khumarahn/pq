@@ -91,6 +91,7 @@ type
     Traits: TListView;
     TrayIcon1: TTrayIcon;
     vars: TPanel;
+    procedure FormActivate(Sender: TObject);
     procedure OnMainFormWindowStateChange(Sender: TObject);
     procedure OnClickTrayIcon1(Sender: TObject);
     procedure GoButtonClick(Sender: TObject);
@@ -107,7 +108,10 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure UnselectListItem(Sender: TObject; Item: TListItem);
+    procedure TriggerAutoSizes;
   private
+    AutoSized: boolean;
     pWindowState: TWindowState;
     Save: TSave;
     procedure Task(caption: String; msec: Integer);
@@ -129,7 +133,6 @@ type
     procedure Brag(trigger: String);
     function GameSaveName: String;
     procedure Guildify;
-    procedure ClearAllSelections;
     function AuthenticateUrl(url: String): String;
     {$IFDEF LOGGING}
     procedure Log(line: String);
@@ -183,23 +186,27 @@ function Split(s: String; field: Integer; separator: String): String; overload;
 
 implementation
 
-uses Web, StrUtils, NewGuy, Math, Config, Front, SelServ, Registry;
+uses Web, StrUtils, NewGuy, Math, Config, Front, SelServ;
 
 {$R *.lfm}
 
-procedure RegWrite(root: HKEY; path, name, value: String);
-var
-  Reg: TRegistry;
+procedure TMainForm.TriggerAutoSizes;
+var i: Integer;
 begin
-  Reg := TRegistry.Create;
-  try
-    Reg.RootKey := root;
-    Reg.OpenKey(path, true);
-    Reg.WriteString(name, value);
-    Reg.CloseKey;
-  finally
-    Reg.Free;
+  for i:=0 to ComponentCount-1 do begin
+    if Components[i] is TSplitter then begin
+      with (Components[i] as TSplitter) do begin
+        MoveSplitter(-1);
+        MoveSplitter(1);
+      end;
+    end;
   end;
+end;
+
+
+procedure TMainForm.UnselectListItem(Sender: TObject; Item: TListItem);
+begin
+  Item.Selected := False;
 end;
 
 procedure StartTimer;
@@ -717,6 +724,14 @@ begin
   pWindowState := WindowState;
 end;
 
+procedure TMainForm.FormActivate(Sender: TObject);
+begin
+  if not AutoSized then begin
+    AutoSized := True;
+    TriggerAutoSizes;
+  end;
+end;
+
 procedure TMainForm.OnClickTrayIcon1(Sender: TObject);
 begin
   if WindowState <> wsNormal then WindowState := wsNormal;
@@ -1134,17 +1149,6 @@ begin
     + ' - Level ' + Get(Traits,'Level');
 end;
 
-procedure TMainForm.ClearAllSelections;
-begin
-      Equips.ClearSelection;
-      Spells.ClearSelection;
-      Stats.ClearSelection;
-      Traits.ClearSelection;
-      Inventory.ClearSelection;
-      Plots.ClearSelection;
-      Quests.ClearSelection;
-end;
-
 function RoughTime(s: Integer): String;
 begin
   if s < 120 then Result := IntToStr(s) + ' seconds'
@@ -1161,8 +1165,6 @@ begin
   gain := Pos('kill|',fTask.Caption) = 1;
   with TaskBar do begin
     if Position >= Max then begin
-      ClearAllSelections;
-
       if Kill.SimpleText = 'Loading....' then Max := 0;
 
       // gain XP / level up
@@ -1214,6 +1216,8 @@ begin
   FExportSheets := false;
 
   TaskBar.DoubleBuffered := True;
+
+  AutoSized := False;
 end;
 
 procedure TMainForm.SpeedButton1Click(Sender: TObject);
@@ -1264,7 +1268,6 @@ begin
     Put(Equips,'Weapon','Sharp Stick');
     Put(Inventory,'Gold',0);
     InventoryLabelAlsoGameStyle.Tag := 3;//GameStyle.Position;
-    ClearAllSelections;
     GoButtonClick(NewGuyForm);
   end;
 end;
@@ -1792,6 +1795,7 @@ end;
 initialization
 
 end.
+
 
 
 

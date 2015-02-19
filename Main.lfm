@@ -1,14 +1,15 @@
 object MainForm: TMainForm
-  Left = 813
-  Height = 706
-  Top = 153
-  Width = 1044
+  Left = 2583
+  Height = 670
+  Top = 216
+  Width = 966
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Caption = 'Progress Quest'
-  ClientHeight = 706
-  ClientWidth = 1044
+  ClientHeight = 670
+  ClientWidth = 966
   Color = clBtnFace
+  Font.Height = -14
   Icon.Data = {
     BE0800000000010001002020000000000000A808000016000000280000002000
     0000400000000100080000000000800400000000000000000000000000000000
@@ -83,12 +84,12 @@ object MainForm: TMainForm
     FF87
   }
   KeyPreview = True
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
   OnWindowStateChange = OnMainFormWindowStateChange
-  ParentFont = True
   Position = poScreenCenter
   LCLVersion = '1.2.6.0'
   object Panel4: TPanel
@@ -99,13 +100,13 @@ object MainForm: TMainForm
     AnchorSideBottom.Side = asrBottom
     Left = 0
     Height = 38
-    Top = 668
-    Width = 1044
+    Top = 632
+    Width = 966
     Anchors = [akLeft, akRight, akBottom]
     AutoSize = True
     Caption = 'Panel4'
     ClientHeight = 38
-    ClientWidth = 1044
+    ClientWidth = 966
     Font.Height = -14
     ParentFont = False
     TabOrder = 0
@@ -113,7 +114,7 @@ object MainForm: TMainForm
       Left = 1
       Height = 20
       Top = 1
-      Width = 1042
+      Width = 964
       Align = alClient
       Panels = <      
         item
@@ -125,7 +126,7 @@ object MainForm: TMainForm
       Left = 1
       Height = 16
       Top = 21
-      Width = 1042
+      Width = 964
       Align = alBottom
       ParentShowHint = False
       Position = 50
@@ -141,59 +142,65 @@ object MainForm: TMainForm
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Control = Panel4
     Left = 0
-    Height = 668
+    Height = 632
     Top = 0
-    Width = 1044
+    Width = 966
     Align = alTop
     Anchors = [akTop, akLeft, akRight, akBottom]
     Caption = 'Panel123'
-    ClientHeight = 668
-    ClientWidth = 1044
+    ClientHeight = 632
+    ClientWidth = 966
     TabOrder = 1
     OnClick = OnClickTrayIcon1
     object Panel1: TPanel
       Left = 1
-      Height = 666
+      Height = 630
       Top = 1
-      Width = 261
+      Width = 280
       Align = alLeft
-      ClientHeight = 666
-      ClientWidth = 261
+      ClientHeight = 630
+      ClientWidth = 280
       Constraints.MinWidth = 50
       TabOrder = 0
       object Panel1top: TPanel
         Left = 1
-        Height = 167
+        Height = 165
         Top = 1
-        Width = 259
+        Width = 278
         Align = alTop
         Caption = 'Panel1top'
-        ClientHeight = 167
-        ClientWidth = 259
+        ClientHeight = 165
+        ClientWidth = 278
         TabOrder = 0
         object Label1: TLabel
           Left = 1
           Height = 16
           Top = 1
-          Width = 257
+          Width = 276
           Align = alTop
           Caption = 'Character Sheet'
+          Font.Height = -14
+          Font.Style = [fsBold]
           ParentColor = False
+          ParentFont = False
         end
         object Label6: TLabel
           Left = 1
           Height = 16
-          Top = 134
-          Width = 257
+          Top = 132
+          Width = 276
           Align = alBottom
           Caption = 'Experience'
+          Font.Height = -14
+          Font.Style = [fsBold]
           ParentColor = False
+          ParentFont = False
         end
         object Traits: TListView
           Left = 1
-          Height = 117
+          Height = 115
           Top = 17
-          Width = 257
+          Width = 276
           Align = alClient
           AutoWidthLastColumn = True
           BorderStyle = bsNone
@@ -203,8 +210,9 @@ object MainForm: TMainForm
               Width = 70
             end          
             item
+              AutoSize = True
               Caption = 'Value'
-              Width = 187
+              Width = 206
             end>
           ColumnClick = False
           HideSelection = False
@@ -221,12 +229,13 @@ object MainForm: TMainForm
           ScrollBars = ssAutoBoth
           TabOrder = 0
           ViewStyle = vsReport
+          OnSelectItem = UnselectListItem
         end
         object ExpBar: TProgressBar
           Left = 1
           Height = 16
-          Top = 150
-          Width = 257
+          Top = 148
+          Width = 276
           Align = alBottom
           ParentShowHint = False
           Position = 50
@@ -237,19 +246,19 @@ object MainForm: TMainForm
       end
       object Panel1middle: TPanel
         Left = 1
-        Height = 210
-        Top = 170
-        Width = 259
+        Height = 206
+        Top = 168
+        Width = 278
         Align = alTop
         Caption = 'Panel1middle'
-        ClientHeight = 210
-        ClientWidth = 259
+        ClientHeight = 206
+        ClientWidth = 278
         TabOrder = 1
         object Stats: TListView
           Left = 1
-          Height = 208
+          Height = 204
           Top = 1
-          Width = 257
+          Width = 276
           Align = alClient
           AutoWidthLastColumn = True
           BorderStyle = bsNone
@@ -259,8 +268,9 @@ object MainForm: TMainForm
               Width = 70
             end          
             item
+              AutoSize = True
               Caption = 'Value'
-              Width = 187
+              Width = 206
             end>
           ColumnClick = False
           HideSelection = False
@@ -280,32 +290,36 @@ object MainForm: TMainForm
           ScrollBars = ssAutoBoth
           TabOrder = 0
           ViewStyle = vsReport
+          OnSelectItem = UnselectListItem
         end
       end
       object Panel1bottom: TPanel
         Left = 1
-        Height = 283
-        Top = 382
-        Width = 259
+        Height = 253
+        Top = 376
+        Width = 278
         Align = alClient
         Caption = 'Panel1bottom'
-        ClientHeight = 283
-        ClientWidth = 259
+        ClientHeight = 253
+        ClientWidth = 278
         TabOrder = 2
         object Label4: TLabel
           Left = 1
           Height = 16
           Top = 1
-          Width = 257
+          Width = 276
           Align = alTop
           Caption = 'Spell Book'
+          Font.Height = -14
+          Font.Style = [fsBold]
           ParentColor = False
+          ParentFont = False
         end
         object Spells: TListView
           Left = 1
-          Height = 237
+          Height = 207
           Top = 17
-          Width = 257
+          Width = 276
           Align = alClient
           AutoWidthLastColumn = True
           BorderStyle = bsNone
@@ -317,8 +331,9 @@ object MainForm: TMainForm
               Width = 70
             end          
             item
+              AutoSize = True
               Caption = 'Level'
-              Width = 187
+              Width = 206
             end>
           ColumnClick = False
           HideSelection = False
@@ -327,15 +342,16 @@ object MainForm: TMainForm
           ScrollBars = ssAutoBoth
           TabOrder = 0
           ViewStyle = vsReport
+          OnSelectItem = UnselectListItem
         end
         object Cheats: TPanel
           Left = 1
           Height = 28
-          Top = 254
-          Width = 257
+          Top = 224
+          Width = 276
           Align = alBottom
           ClientHeight = 28
-          ClientWidth = 257
+          ClientWidth = 276
           TabOrder = 1
           Visible = False
           object CashIn: TButton
@@ -389,8 +405,8 @@ object MainForm: TMainForm
         Cursor = crVSplit
         Left = 1
         Height = 2
-        Top = 168
-        Width = 259
+        Top = 166
+        Width = 278
         Align = alTop
         ResizeAnchor = akTop
       end
@@ -398,46 +414,49 @@ object MainForm: TMainForm
         Cursor = crVSplit
         Left = 1
         Height = 2
-        Top = 380
-        Width = 259
+        Top = 374
+        Width = 278
         Align = alTop
         ResizeAnchor = akTop
       end
     end
     object Panel3: TPanel
-      Left = 757
-      Height = 666
+      Left = 685
+      Height = 630
       Top = 1
-      Width = 286
+      Width = 280
       Align = alRight
-      ClientHeight = 666
-      ClientWidth = 286
+      ClientHeight = 630
+      ClientWidth = 280
       Constraints.MinWidth = 50
       TabOrder = 1
       object Panel3top: TPanel
         Left = 1
         Height = 263
         Top = 1
-        Width = 284
+        Width = 278
         Align = alTop
         Caption = 'Panel3top'
         ClientHeight = 263
-        ClientWidth = 284
+        ClientWidth = 278
         TabOrder = 0
         object Label2: TLabel
           Left = 1
           Height = 16
           Top = 1
-          Width = 282
+          Width = 276
           Align = alTop
           Caption = 'Plot Development'
+          Font.Height = -14
+          Font.Style = [fsBold]
           ParentColor = False
+          ParentFont = False
         end
         object Plots: TListView
           Left = 1
           Height = 229
           Top = 17
-          Width = 282
+          Width = 276
           Align = alClient
           AutoWidthLastColumn = True
           BorderStyle = bsNone
@@ -445,7 +464,7 @@ object MainForm: TMainForm
           Columns = <          
             item
               Caption = 'Act'
-              Width = 282
+              Width = 276
             end>
           ColumnClick = False
           HideSelection = False
@@ -457,12 +476,13 @@ object MainForm: TMainForm
           TabOrder = 0
           ViewStyle = vsReport
           OnItemChecked = PlotsItemChecked
+          OnSelectItem = UnselectListItem
         end
         object PlotBar: TProgressBar
           Left = 1
           Height = 16
           Top = 246
-          Width = 282
+          Width = 276
           Align = alBottom
           Max = 0
           ParentShowHint = False
@@ -473,28 +493,31 @@ object MainForm: TMainForm
       end
       object Panel3bottom: TPanel
         Left = 1
-        Height = 399
+        Height = 363
         Top = 266
-        Width = 284
+        Width = 278
         Align = alClient
         Caption = 'Panel3bottom'
-        ClientHeight = 399
-        ClientWidth = 284
+        ClientHeight = 363
+        ClientWidth = 278
         TabOrder = 1
         object Label3: TLabel
           Left = 1
           Height = 16
           Top = 1
-          Width = 282
+          Width = 276
           Align = alTop
           Caption = 'Quests'
+          Font.Height = -14
+          Font.Style = [fsBold]
           ParentColor = False
+          ParentFont = False
         end
         object QuestBar: TProgressBar
           Left = 1
           Height = 16
-          Top = 382
-          Width = 282
+          Top = 346
+          Width = 276
           Align = alBottom
           Max = 0
           ParentShowHint = False
@@ -504,9 +527,9 @@ object MainForm: TMainForm
         end
         object Quests: TListView
           Left = 1
-          Height = 365
+          Height = 329
           Top = 17
-          Width = 282
+          Width = 276
           Align = alClient
           AutoWidthLastColumn = True
           BorderStyle = bsNone
@@ -514,11 +537,14 @@ object MainForm: TMainForm
           Columns = <          
             item
               Caption = 'Quest'
-              Width = 282
+              Width = 276
             end>
           ColumnClick = False
+          Font.Height = -14
+          Font.Name = 'Arial'
           HideSelection = False
           IconOptions.Arrangement = iaLeft
+          ParentFont = False
           ReadOnly = True
           RowSelect = True
           ScrollBars = ssAutoBoth
@@ -526,6 +552,7 @@ object MainForm: TMainForm
           TabOrder = 1
           ViewStyle = vsReport
           OnItemChecked = QuestsItemChecked
+          OnSelectItem = UnselectListItem
         end
       end
       object Splitter3: TSplitter
@@ -533,25 +560,25 @@ object MainForm: TMainForm
         Left = 1
         Height = 2
         Top = 264
-        Width = 284
+        Width = 278
         Align = alTop
         ResizeAnchor = akTop
       end
     end
     object Panel2: TPanel
-      Left = 264
-      Height = 666
+      Left = 283
+      Height = 630
       Top = 1
-      Width = 491
+      Width = 400
       Align = alClient
-      ClientHeight = 666
-      ClientWidth = 491
+      ClientHeight = 630
+      ClientWidth = 400
       TabOrder = 2
       object EncumBar: TProgressBar
         Left = 1
         Height = 16
-        Top = 649
-        Width = 489
+        Top = 613
+        Width = 398
         Align = alBottom
         ParentShowHint = False
         Position = 50
@@ -561,22 +588,22 @@ object MainForm: TMainForm
       end
       object Panel2top: TPanel
         Left = 1
-        Height = 275
+        Height = 261
         Top = 1
-        Width = 489
+        Width = 398
         Align = alTop
         Caption = 'Panel2top'
-        ClientHeight = 275
-        ClientWidth = 489
+        ClientHeight = 261
+        ClientWidth = 398
         TabOrder = 1
         object vars: TPanel
           AnchorSideRight.Control = Panel2
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = Equips
           AnchorSideBottom.Side = asrBottom
-          Left = 793
+          Left = 702
           Height = 107
-          Top = 167
+          Top = 153
           Width = 51
           Anchors = [akRight, akBottom]
           AutoSize = True
@@ -620,9 +647,9 @@ object MainForm: TMainForm
         end
         object Equips: TListView
           Left = 1
-          Height = 257
+          Height = 243
           Top = 17
-          Width = 487
+          Width = 396
           Align = alClient
           AutoWidthLastColumn = True
           BorderStyle = bsNone
@@ -633,8 +660,9 @@ object MainForm: TMainForm
               Width = 120
             end          
             item
+              AutoSize = True
               Caption = 'Equipped'
-              Width = 367
+              Width = 276
             end>
           ColumnClick = False
           HideSelection = False
@@ -659,41 +687,45 @@ object MainForm: TMainForm
           ShowColumnHeaders = False
           TabOrder = 1
           ViewStyle = vsReport
+          OnSelectItem = UnselectListItem
         end
         object Label8: TLabel
           Left = 1
           Height = 16
           Top = 1
-          Width = 487
+          Width = 396
           Align = alTop
           Caption = 'Equipment'
+          Font.Height = -14
+          Font.Style = [fsBold]
           ParentColor = False
+          ParentFont = False
         end
       end
       object Panel2bottom: TPanel
         Left = 1
-        Height = 371
-        Top = 278
-        Width = 489
+        Height = 349
+        Top = 264
+        Width = 398
         Align = alClient
         Caption = 'Panel2bottom'
-        ClientHeight = 371
-        ClientWidth = 489
+        ClientHeight = 349
+        ClientWidth = 398
         TabOrder = 2
         object Label7: TLabel
           Left = 1
           Height = 16
-          Top = 354
-          Width = 487
+          Top = 332
+          Width = 396
           Align = alBottom
           Caption = 'Encumbrance'
           ParentColor = False
         end
         object Inventory: TListView
           Left = 1
-          Height = 337
+          Height = 315
           Top = 17
-          Width = 487
+          Width = 396
           Align = alClient
           AutoWidthLastColumn = True
           BorderStyle = bsNone
@@ -705,8 +737,9 @@ object MainForm: TMainForm
             end          
             item
               Alignment = taRightJustify
+              AutoSize = True
               Caption = 'Qty'
-              Width = 447
+              Width = 356
             end>
           ColumnClick = False
           HideSelection = False
@@ -720,31 +753,34 @@ object MainForm: TMainForm
           Left = 1
           Height = 16
           Top = 1
-          Width = 487
+          Width = 396
           Align = alTop
           Caption = 'Inventory'
+          Font.Height = -14
+          Font.Style = [fsBold]
           ParentColor = False
+          ParentFont = False
         end
       end
       object Splitter4: TSplitter
         Cursor = crVSplit
         Left = 1
         Height = 2
-        Top = 276
-        Width = 489
+        Top = 262
+        Width = 398
         Align = alTop
         ResizeAnchor = akTop
       end
     end
     object Splitter1: TSplitter
-      Left = 262
-      Height = 666
+      Left = 281
+      Height = 630
       Top = 1
       Width = 2
     end
     object Splitter2: TSplitter
-      Left = 755
-      Height = 666
+      Left = 683
+      Height = 630
       Top = 1
       Width = 2
       Align = alRight

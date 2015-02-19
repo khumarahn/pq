@@ -5,6 +5,7 @@
   * proxy?
   * very large experience and spell levels?
   * autosize last columns?
+  * double buffering everything
 }
 
 unit Main;

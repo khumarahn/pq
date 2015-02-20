@@ -107,8 +107,6 @@ object MainForm: TMainForm
     Caption = 'Panel4'
     ClientHeight = 36
     ClientWidth = 966
-    Font.Height = -14
-    ParentFont = False
     TabOrder = 0
     object Kill: TStatusBar
       Left = 0
@@ -209,7 +207,6 @@ object MainForm: TMainForm
               Width = 70
             end          
             item
-              AutoSize = True
               Caption = 'Value'
               Width = 206
             end>
@@ -267,7 +264,6 @@ object MainForm: TMainForm
               Width = 70
             end          
             item
-              AutoSize = True
               Caption = 'Value'
               Width = 206
             end>
@@ -329,7 +325,6 @@ object MainForm: TMainForm
               Width = 70
             end          
             item
-              AutoSize = True
               Caption = 'Level'
               Width = 206
             end>
@@ -653,7 +648,6 @@ object MainForm: TMainForm
               Width = 120
             end          
             item
-              AutoSize = True
               Caption = 'Equipped'
               Width = 278
             end>
@@ -729,7 +723,6 @@ object MainForm: TMainForm
             end          
             item
               Alignment = taRightJustify
-              AutoSize = True
               Caption = 'Qty'
               Width = 358
             end>

@@ -827,7 +827,7 @@ begin
     // favor the best stat so it will tend to clump
     t := 0;
     for i := 0 to 5 do t := t + Square(GetI(Stats,i));
-    if t<0 then t:=0 else t := t * Random;
+    t := t * Random;
     i := -1;
     while t >= 0 do begin
       Inc(i);
@@ -1800,7 +1800,3 @@ initialization
 
 end.
 
-
-
-
-

@@ -13,7 +13,7 @@ type TSave = class(TCollectionItem)
   private
     mLabel1_Hint: String;
 
-    mTraits_Tag: LongInt;
+    mTraits_Tag: PtrInt;
     mTraits_Hint: String;
     mTraits_Items_Captions: TStringList;
     mTraits_Items_Subitems: TStringList;
@@ -46,9 +46,9 @@ type TSave = class(TCollectionItem)
 
     mQuests_Items_Captions: TStringList;
 
-    mInventoryLabelAlsoGameStyle_Tag: LongInt;
+    mInventoryLabelAlsoGameStyle_Tag: PtrInt;
 
-    mInventory_Tag: LongInt;
+    mInventory_Tag: PtrInt;
     mInventory_Items_Captions: TStringList;
     mInventory_Items_Subitems: TStringList;
 
@@ -57,14 +57,14 @@ type TSave = class(TCollectionItem)
     mEncumBar_Max: LongInt;
     mEncumBar_Position: LongInt;
 
-    mEquips_Tag: LongInt;
+    mEquips_Tag: PtrInt;
     mEquips_Hint: String;
     mEquips_Items_Captions: TStringList;
     mEquips_Items_Subitems: TStringList;
 
     mfTask_Caption: String;
 
-    mfQuest_Tag: LongInt;
+    mfQuest_Tag: PtrInt;
 
     mKill_SimpleText: String;
 
@@ -73,7 +73,7 @@ type TSave = class(TCollectionItem)
     mTaskBar_Position: LongInt;
     mTaskBar_Step: LongInt;
 
-    mTimer1_Tag: LongInt;
+    mTimer1_Tag: PtrInt;
     mTimer1_Enabled: Boolean;
     mTimer1_Interval: LongInt;
   public
@@ -85,7 +85,7 @@ type TSave = class(TCollectionItem)
 
     property Label1_Hint: String read mLabel1_Hint write mLabel1_Hint;
 
-    property Traits_Tag: LongInt read mTraits_Tag write mTraits_Tag;
+    property Traits_Tag: PtrInt read mTraits_Tag write mTraits_Tag;
     property Traits_Hint: String read mTraits_Hint write mTraits_Hint;
     property Traits_Items_Captions: TStringList read mTraits_Items_Captions write mTraits_Items_Captions;
     property Traits_Items_Subitems: TStringList read mTraits_Items_Subitems write mTraits_Items_Subitems;
@@ -117,9 +117,9 @@ type TSave = class(TCollectionItem)
 
     property Quests_Items_Captions: TStringList read mQuests_Items_Captions write mQuests_Items_Captions;
 
-    property InventoryLabelAlsoGameStyle_Tag: LongInt read mInventoryLabelAlsoGameStyle_Tag write mInventoryLabelAlsoGameStyle_Tag;
+    property InventoryLabelAlsoGameStyle_Tag: PtrInt read mInventoryLabelAlsoGameStyle_Tag write mInventoryLabelAlsoGameStyle_Tag;
 
-    property Inventory_Tag: LongInt read mInventory_Tag write mInventory_Tag;
+    property Inventory_Tag: PtrInt read mInventory_Tag write mInventory_Tag;
     property Inventory_Items_Captions: TStringList read mInventory_Items_Captions write mInventory_Items_Captions;
     property Inventory_Items_Subitems: TStringList read mInventory_Items_Subitems write mInventory_Items_Subitems;
 
@@ -128,14 +128,14 @@ type TSave = class(TCollectionItem)
     property EncumBar_Max:       LongInt  read mEncumBar_Max       write mEncumBar_Max;
     property EncumBar_Position:  LongInt  read mEncumBar_Position  write mEncumBar_Position;
 
-    property Equips_Tag: LongInt read mEquips_Tag write mEquips_Tag;
+    property Equips_Tag: PtrInt read mEquips_Tag write mEquips_Tag;
     property Equips_Hint: String read mEquips_Hint write mEquips_Hint;
     property Equips_Items_Captions: TStringList read mEquips_Items_Captions write mEquips_Items_Captions;
     property Equips_Items_Subitems: TStringList read mEquips_Items_Subitems write mEquips_Items_Subitems;
 
     property fTask_Caption:      String   read mfTask_Caption      write mfTask_Caption;
 
-    property fQuest_Tag:         LongInt  read mfQuest_Tag         write mfQuest_Tag;
+    property fQuest_Tag:         PtrInt  read mfQuest_Tag         write mfQuest_Tag;
 
     property Kill_SimpleText:    String   read mKill_SimpleText    write mKill_SimpleText;
 
@@ -144,7 +144,7 @@ type TSave = class(TCollectionItem)
     property TaskBar_Position:   LongInt  read mTaskBar_Position   write mTaskBar_Position;
     property TaskBar_Step:       LongInt  read mTaskBar_Step       write mTaskBar_Step;
 
-    property Timer1_Tag:         LongInt  read mTimer1_Tag         write mTimer1_Tag;
+    property Timer1_Tag:         PtrInt   read mTimer1_Tag         write mTimer1_Tag;
     property Timer1_Enabled:     Boolean  read mTimer1_Enabled     write mTimer1_Enabled;
     property Timer1_Interval:    LongInt  read mTimer1_Interval    write mTimer1_Interval;
 

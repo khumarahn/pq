@@ -12,6 +12,9 @@ unit Main;
 
 {$MODE Delphi}
 
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+
 { copyright (c)2002 Eric Fredricksen all rights reserved  }
 { copyright (c) 2015 Alexey Korepanov all rights reserved }
 
@@ -814,20 +817,21 @@ end;
 
 procedure TMainForm.WinStat;
 var
-  i,t: Integer;
-  function Square(x: Integer): Integer; begin Result := x * x; end;
+  i: Integer;
+  t: Extended;
+  function Square(x: Extended): Extended; begin Result := x * x; end;
 begin
   if Odds(1,2)
   then i := Random(Stats.Items.Count)
   else begin
     // favor the best stat so it will tend to clump
     t := 0;
-    for i := 0 to 5 do Inc(t,Square(GetI(Stats,i)));
-    t := Random(t);
+    for i := 0 to 5 do t := t + Square(GetI(Stats,i));
+    if t<0 then t:=0 else t := t * Random;
     i := -1;
     while t >= 0 do begin
       Inc(i);
-      Dec(t,Square(GetI(Stats,i)));
+      t := t- Square(GetI(Stats,i));
     end;
   end;
   Add(Stats, Stats.Items[i].Caption, 1);

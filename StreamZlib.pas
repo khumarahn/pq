@@ -1,4 +1,7 @@
-{ Udo Schmal 2014, Alexey Korepanov, 2015 }
+{ 
+  copyright (c) Udo Schmal 2014, 
+  Alexey Korepanov, 2015 
+}
 
 unit StreamZlib;
 {$ifdef fpc}
@@ -80,17 +83,15 @@ end;
 function ZLib(inStream, outStream: TMemoryStream; level: TZCompressionLevel = zcDefault): boolean;
 var adler: longword;
 begin
-  inStream.Position := 0; // goto start of input stream
-  outStream.Position := 0; // goto start of output stream
+  inStream.Position := 0;
+  outStream.Position := 0;
   outStream.WriteWord($9c78); //ZLib Header
   adler := adler32(0, Z_NULL, 0);
   adler := adler32(adler, Pointer(inStream.Memory), inStream.Size);
   result := deflate(inStream, outStream, level);
   if result then // add adler32 checksum
     outStream.WriteDWord(SwapEndian(adler)); // adler32 checksum
-  outStream.Position := 0; // goto start of result stream
-//  WriteLog('deflateed:'#13#10 + Hexdump(Pointer(outStream.Memory)^, outStream.Size)) ;
-//  outStream.Seek(0, soFromBeginning);
+  outStream.Position := 0;
 end;
 
 function UnZlib(inStream, outStream: TMemoryStream): boolean;
@@ -98,8 +99,8 @@ var
   hdr, adler, adler32in: longword;
 begin
   result := false;
-  inStream.Position := 0; // goto start of input stream
-  outStream.Position := 0; // goto start of output stream
+  inStream.Position := 0;
+  outStream.Position := 0;
   hdr := inStream.ReadDWord;
   if (hdr and $00009C78) = $00009C78 then // zlib header
   begin
@@ -124,8 +125,8 @@ begin
   begin
     result := false;
   end;
-  inStream.Position := 0; // goto start of source stream
-  outStream.Position := 0; // goto start of result stream
+  inStream.Position := 0;
+  outStream.Position := 0;
 end;
 
 end.

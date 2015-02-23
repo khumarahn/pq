@@ -1,5 +1,6 @@
-Progress Quest version 6.2
-Copyright (c) 2003 Eric Fredricksen
+Progress Quest on Lazarus
+Copyright (c) 2003-2012 Eric Fredricksen
+Copyright (c) 2014 Udo Schmal
 Copyright (c) 2015 Alexey Korepanov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 

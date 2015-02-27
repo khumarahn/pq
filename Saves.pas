@@ -76,11 +76,14 @@ type TSave = class(TCollectionItem)
     mTimer1_Tag: PtrInt;
     mTimer1_Enabled: Boolean;
     mTimer1_Interval: LongInt;
+
   public
     procedure Dump(f: TStream);
     procedure Load(f: TStream);
     procedure LoadDfm(f: TStream);
     constructor Create; overload;
+    destructor Destroy; override;
+
   published
 
     property Label1_Hint: String read mLabel1_Hint write mLabel1_Hint;
@@ -174,6 +177,29 @@ implementation
 
   end;
 
+  destructor TSave.Destroy;
+  begin
+    Traits_Items_Captions.Destroy;
+    Traits_Items_Subitems.Destroy;
+
+    Stats_Items_Captions.Destroy;
+    Stats_Items_Subitems.Destroy;
+
+    Spells_Items_Captions.Destroy;
+    Spells_Items_Subitems.Destroy;
+
+    Plots_Items_Captions.Destroy;
+
+    Quests_Items_Captions.Destroy;
+
+    Inventory_Items_Captions.Destroy;
+    Inventory_Items_Subitems.Destroy;
+
+    Equips_Items_Captions.Destroy;
+    Equips_Items_Subitems.Destroy;
+  end;
+
+
   procedure TSave.Dump(f: TStream);
   var
     JS: TJSONStreamer;
@@ -182,6 +208,8 @@ implementation
     JS := TJSONStreamer.Create(Nil);
     j := JS.ObjectToJSON(Self);
     f.WriteAnsiString(j.FormatJSON);
+    j.Destroy;
+    JS.Destroy;
   end;
 
   procedure TSave.Load(f: TStream);
@@ -190,6 +218,7 @@ implementation
   begin
     JS := TJSONDeStreamer.Create(Nil);
     JS.JSONToObject(f.ReadAnsiString, Self);
+    JS.Destroy;
   end;
 
   procedure TSave.LoadDfm(f: TStream);
@@ -456,6 +485,8 @@ implementation
     {$IFDEF PQSAVES_DEBUG}
     writeln('Done, world!');
     {$ENDIF}
+    v_binary.Free;
+    Reader.Destroy;
     v_class_type := v_class_type; v_type := v_type; b_dword := b_dword; // suppressing compiler warnings
   end;
 

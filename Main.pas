@@ -1513,6 +1513,8 @@ begin
   f.Position := 0;
   f.CopyFrom(zm, zm.Size);
   m.Free; zm.Free; f.Free;
+
+  Save.Destroy;
 end;
 
 procedure TMainForm.LoadGame(name: String);
@@ -1633,6 +1635,8 @@ begin
   m.Free; zm.Free; f.Free;
 
   FSaveFileName := ChangeFileExt(name, '.lpq');
+
+  Save.Destroy;
 
   {$IFDEF LOGGING}
   Log('Loaded game: ' + name);
@@ -1799,4 +1803,4 @@ end;
 initialization
 
 end.
-
+

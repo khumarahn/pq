@@ -49,6 +49,7 @@ type TSave = class(TCollectionItem)
     mInventoryLabelAlsoGameStyle_Tag: PtrInt;
 
     mInventory_Tag: PtrInt;
+    mInventory_Hint: String;
     mInventory_Items_Captions: TStringList;
     mInventory_Items_Subitems: TStringList;
 
@@ -64,6 +65,7 @@ type TSave = class(TCollectionItem)
 
     mfTask_Caption: String;
 
+    mfQuest_Caption: String;
     mfQuest_Tag: PtrInt;
 
     mKill_SimpleText: String;
@@ -122,7 +124,8 @@ type TSave = class(TCollectionItem)
 
     property InventoryLabelAlsoGameStyle_Tag: PtrInt read mInventoryLabelAlsoGameStyle_Tag write mInventoryLabelAlsoGameStyle_Tag;
 
-    property Inventory_Tag: PtrInt read mInventory_Tag write mInventory_Tag;
+    property Inventory_Tag:      PtrInt   read mInventory_Tag      write mInventory_Tag;
+    property Inventory_Hint:     String   read mInventory_Hint     write mInventory_Hint;
     property Inventory_Items_Captions: TStringList read mInventory_Items_Captions write mInventory_Items_Captions;
     property Inventory_Items_Subitems: TStringList read mInventory_Items_Subitems write mInventory_Items_Subitems;
 
@@ -138,7 +141,8 @@ type TSave = class(TCollectionItem)
 
     property fTask_Caption:      String   read mfTask_Caption      write mfTask_Caption;
 
-    property fQuest_Tag:         PtrInt  read mfQuest_Tag         write mfQuest_Tag;
+    property fQuest_Caption:     String  read mfQuest_Caption      write mfQuest_Caption;
+    property fQuest_Tag:         PtrInt  read mfQuest_Tag          write mfQuest_Tag;
 
     property Kill_SimpleText:    String   read mKill_SimpleText    write mKill_SimpleText;
 
@@ -410,6 +414,7 @@ implementation
 
         if v_class = 'INVENTORY' then begin
           if v_name = 'TAG' then Inventory_Tag := StrToInt(v_value);
+          if v_name = 'HINT' then Inventory_Hint := v_value;
           if v_name = 'ITEMS.DATA' then begin
             b_dword := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' length: ', b_dword);{$ENDIF}
             b_size  := v_binary.ReadDWord; {$IFDEF PQSAVES_DEBUG}WriteLn(' size: ', b_size);{$ENDIF}
@@ -458,6 +463,7 @@ implementation
 
         if v_class = 'FQUEST' then begin
           if v_name = 'TAG'   then  fQuest_Tag := StrToInt(v_value);
+          if v_name = 'CAPTION'   then  fQuest_Caption := v_value;
         end; // FQUEST
 
         if v_class = 'KILL' then begin

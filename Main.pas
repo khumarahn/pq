@@ -1453,6 +1453,8 @@ begin
   Save.InventoryLabelAlsoGameStyle_Tag := InventoryLabelAlsoGameStyle.Tag;
 
   Save.Inventory_Tag := Inventory.Tag;
+  Save.Inventory_Hint := Inventory.Hint;
+
   with Inventory do for i := 0 to Items.Count-1 do begin
     Save.Inventory_Items_Captions.Add(Items[i].Caption);
     Save.Inventory_Items_SubItems.Add(Items[i].Subitems[0]);
@@ -1473,6 +1475,7 @@ begin
   Save.fTask_Caption := fTask.Caption;
 
   Save.fQuest_Tag := fQuest.Tag;
+  Save.fQuest_Caption := fQuest.Caption;
 
   Save.Kill_SimpleText := Kill.SimpleText;
 
@@ -1601,6 +1604,7 @@ begin
   InventoryLabelAlsoGameStyle.Tag := Save.InventoryLabelAlsoGameStyle_Tag;
 
   Inventory.Tag := Save.Inventory_Tag;
+  Inventory.Hint := Save.Inventory_Hint;
   for i := 0 to Save.Inventory_Items_Captions.Count-1 do begin
     Put(Inventory, Save.Inventory_Items_Captions[i], Save.Inventory_Items_SubItems[i]);
   end;
@@ -1619,6 +1623,7 @@ begin
   fTask.Caption := Save.fTask_Caption;
 
   fQuest.Tag := Save.fQuest_Tag;
+  fQuest.Caption := Save.fQuest_Caption;
 
   Kill.SimpleText := Save.Kill_SimpleText;
 

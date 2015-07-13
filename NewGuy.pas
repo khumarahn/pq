@@ -226,7 +226,7 @@ var
   begin
     Result := '';
     count := 1;
-    for i := 0 to Length(s)-1 do
+    for i := 1 to Length(s) do
       if s[i] = '|' then Inc(count);
     Result := Split(s, Random(count));
   end;
@@ -263,4 +263,4 @@ begin
 end;
 
 end.
-
+

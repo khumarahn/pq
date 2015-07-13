@@ -1164,7 +1164,8 @@ end;
 procedure TMainForm.Timer1Timer(Sender: TObject);
 var
   gain: Boolean;
-  elapsed: Integer;
+  elapsed: DWORD;
+  tick: DWORD;
 begin
   gain := Pos('kill|',fTask.Caption) = 1;
   with TaskBar do begin
@@ -1196,9 +1197,14 @@ begin
 
       Dequeue();
     end else begin
-      elapsed := LongInt(GetTickCount) - LongInt(Timer1.Tag);
-      if elapsed > 200 then elapsed := 200;
-      if elapsed < 0 then elapsed := 0;
+      // compute elapsed time, try to avoid overflows
+      tick := GetTickCount Mod 65536;
+      // take into account previous design
+      Timer1.Tag := Timer1.Tag Mod 65536;
+      if tick >= Timer1.Tag then elapsed := tick - Timer1.Tag
+      else elapsed := (65536 - Timer1.Tag) + tick;
+      if (elapsed > 100) then elapsed := 100;
+
       TaskBar.Position := TaskBar.Position + elapsed;
     end;
   end;
@@ -1808,4 +1814,4 @@ end;
 initialization
 
 end.
-
+

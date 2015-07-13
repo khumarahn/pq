@@ -1203,7 +1203,7 @@ begin
       Timer1.Tag := Timer1.Tag Mod 65536;
       if tick >= Timer1.Tag then elapsed := tick - Timer1.Tag
       else elapsed := (65536 - Timer1.Tag) + tick;
-      if (elapsed > 100) then elapsed := 100;
+      if (elapsed > 200) then elapsed := 200;
 
       TaskBar.Position := TaskBar.Position + elapsed;
     end;

@@ -25,7 +25,8 @@ interface
 
 uses
   LCLIntf, LCLType, LMessages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, Menus, FileUtil, StreamZlib, Saves;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, Menus, FileUtil, StreamZlib, Saves,
+  InventoryBack;
 
 const
   // revs:
@@ -113,6 +114,7 @@ type
       Shift: TShiftState);
     procedure UnselectListItem(Sender: TObject; Item: TListItem);
     procedure TriggerAutoSizes;
+    procedure InventoryData(Sender: TObject; Item: TListItem);
   private
     AutoSized: boolean;
     pWindowState: TWindowState;
@@ -145,7 +147,10 @@ type
     procedure InterplotCinematic;
     function NamedMonster(level: Integer): String;
     function ImpressiveGuy: String;
+    procedure InventoryUpd;
   public
+    InventoryBack: TInventoryBack;
+    InventoryBack_Gold: integer;
     FReportSave: Boolean;
     FLogEvents: Boolean;
     FMakeBackups: Boolean;
@@ -154,6 +159,7 @@ type
     FSaveFileName: String;
     procedure LoadGame(name: String);
     function SaveGame: Boolean;
+    procedure AddInventory(key: string; value: integer);
     procedure Put(list: TListView; key: String; value: String); overload;
     procedure Put(list: TListView; pos: Integer; value: String); overload;
     procedure Put(list: TListView; key: String; value: Integer); overload;
@@ -568,30 +574,38 @@ procedure TMainForm.Dequeue;
 var
   s, a, old: String;
   n, l: Integer;
+  si: TInventoryBack.TStringIntPair;
 begin
   while TaskDone do begin
     if Split(fTask.Caption,0) = 'kill' then begin
       if Split(fTask.Caption,3) = '*' then begin
         WinItem;
       end else if Split(fTask.Caption,3) <> '' then begin
-        Add(Inventory,LowerCase(Split(fTask.Caption,1) + ' ' + ProperCase(Split(fTask.Caption,3))),1);
+        AddInventory(LowerCase(Split(fTask.Caption,1) + ' ' + ProperCase(Split(fTask.Caption,3))),1);
+        InventoryUpd;
       end;
     end else if fTask.Caption = 'buying' then begin
       // buy some equipment
-      Add(Inventory,'Gold',-EquipPrice);
+      AddInventory('gold',-EquipPrice);
+      InventoryUpd;
       WinEquip;
-    end else if (fTask.Caption = 'market') or (fTask.Caption = 'sell') then with Inventory do begin
+    end else if (fTask.Caption = 'market') or (fTask.Caption = 'sell') then begin
       if fTask.Caption = 'sell' then begin
-        Tag := GetI(Inventory,1);
+        si := InventoryBack.Pop;
+        InventoryUpd;
+        with Encumbar do begin
+          Position := InventoryBack.encum;
+          Hint := IntToStr(Position) + '/' + IntToStr(Max) + ' cubits';
+        end;
+        Tag := si.i;
         Tag := Tag * GetI(Traits,'Level');
-        if Pos(' of ',Items[1].Caption) > 0 then
+        if Pos(' of ', si.s) > 0 then
           Tag := Tag * (1+RandomLow(10)) * (1+RandomLow(GetI(Traits,'Level')));
-        Items[0].MakeVisible(false);
-        Items.Delete(1);
-        Add(Inventory,'Gold',Tag);
+        AddInventory('gold',Tag);
+        InventoryUpd;
       end;
-      if Items.Count > 1 then begin
-        Task('Selling ' + Indefinite(Inventory.Items[1].Caption, GetI(Inventory,1)), 1 * 1000);
+      if InventoryBack.Count > 0 then begin
+        Task('Selling ' + Indefinite(InventoryBack.Items_s(0), InventoryBack.Items_i(0)), 1 * 1000);
         fTask.Caption := 'sell';
         break;
       end;
@@ -616,7 +630,7 @@ begin
       Task('Heading to market to sell loot',4 * 1000);
       fTask.Caption := 'market';
     end else if (Pos('kill|',old) <= 0) and (old <> 'heading') then begin
-      if GetI(Inventory, 'Gold') > EquipPrice then begin
+      if InventoryBack_Gold > EquipPrice then begin
         Task('Negotiating purchase of better equipment', 5 * 1000);
         fTask.Caption := 'buying';
       end else begin
@@ -658,10 +672,6 @@ begin
   Put(list,key,IntToStr(value));
   if key = 'STR' then
     Encumbar.Max := 10 + value;
-  if list = Inventory then with Encumbar do begin
-    Position := Sum(Inventory) - GetI(Inventory,'Gold');
-    Hint := IntToStr(Position) + '/' + IntToStr(Max) + ' cubits';
-  end;
 end;
 
 procedure TMainForm.Put(list: TListView; pos: Integer; value: String);
@@ -733,6 +743,68 @@ begin
     AutoSized := True;
     TriggerAutoSizes;
   end;
+end;
+
+procedure TMainForm.InventoryData(Sender: TObject; Item: TListItem);
+begin
+  if Item.subItems.Count < 1 then Item.SubItems.Add('');
+  if Item.Index = 0 then begin
+    Item.Caption := 'Gold';
+    Item.SubItems[0] := IntToStr(InventoryBack_Gold);
+  end else begin
+    Item.Caption := InventoryBack.Items_s(Item.Index-1);
+    Item.SubItems[0] := IntToStr(InventoryBack.Items_i(Item.Index-1));
+  end;
+end;
+
+procedure TMainForm.InventoryUpd;
+var
+  i: integer;
+begin
+  if Inventory.TopItem <> nil then i := Inventory.TopItem.Index else i:=0;
+  if Inventory.Items.Count = 1 + InventoryBack.Count then begin
+    Inventory.Update;
+  end else begin
+    Inventory.Items.Count := 1 + InventoryBack.Count;
+  end;
+
+  i := 0;
+  i := i;
+  {
+  if Inventory.TopItem <> nil then i := Inventory.TopItem.Index else i:= 0;
+  if i <  0 then i := 0;
+  if i >= Inventory.Items.Count then i := Inventory.Items.Count - 1;
+  Inventory.Items.Item[i].MakeVisible(true);
+  }
+
+end;
+
+procedure TMainForm.AddInventory(key: string; value: integer);
+{$IFDEF LOGGING}
+var
+  line, kkey: string;
+{$ENDIF}
+begin
+  if (key='gold') or (key='Gold') then
+    InventoryBack_Gold := InventoryBack_Gold + value
+  else begin
+    InventoryBack.Add(key, value);
+    with Encumbar do begin
+      Position := InventoryBack.encum;
+      Hint := IntToStr(Position) + '/' + IntToStr(Max) + ' cubits';
+    end;
+  end;
+  {$IFDEF LOGGING}
+  kkey := key;
+  if value > 0 then line := 'Gained' else line := 'Lost';
+  if key = 'gold' then begin
+    kkey := 'gold piece';
+    if value > 0 then line := 'Got paid' else line := 'Spent';
+  end;
+  if value < 0 then value := -value;
+  line := line + ' ' + Indefinite(kkey, value);
+  Log(line);
+  {$ENDIF}
 end;
 
 procedure TMainForm.OnClickTrayIcon1(Sender: TObject);
@@ -856,7 +928,7 @@ end;
 
 procedure TMainForm.WinItem;
 begin
-  Add(Inventory, SpecialItem, 1);
+  AddInventory(SpecialItem, 1);
 end;
 
 procedure TMainForm.CompleteQuest;
@@ -1037,12 +1109,12 @@ begin
       WrLn( '  ' + Items[i].Caption + ' ' + Get(Spells,i));
   WrLn;
   WrLn( 'Inventory (' + EncumBar.Hint + '):');
-  WrLn( '  ' + Indefinite('gold piece', GetI(Inventory, 'Gold')));
-  with Inventory do
-    for i := 2 to Items.Count-1 do
-      if Pos(' of ', Items[i].Caption) > 0
-      then WrLn( '  ' + Definite(Items[i].Caption, GetI(Inventory,i)))
-      else WrLn( '  ' + Indefinite(Items[i].Caption, GetI(Inventory,i)));
+  WrLn( '  ' + Indefinite('gold piece', InventoryBack_Gold));
+  if InventoryBack.Count>0 then with InventoryBack do
+    for i := 0 to Count-1 do
+      if Pos(' of ', Items_s(i)) > 0
+      then WrLn( '  ' + Definite(  Items_s(i), Items_i(i)))
+      else WrLn( '  ' + Indefinite(Items_s(i), Items_i(i)));
   WrLn;
   WrLn( '-- ' + DateTimeToStr(Now));
   WrLn( '-- Progress Quest 6.2 - http://progressquest.com/');
@@ -1062,11 +1134,14 @@ begin
 end;
 
 procedure TMainForm.Add(list: TListView; key: String; value: Integer);
+{$IFDEF LOGGING}
 var line: String;
+{$ENDIF}
 begin
   Put(list, key, value + GetI(list,key));
   if value = 0 then Exit;
 
+  {$IFDEF LOGGING}
   if value > 0 then line := 'Gained' else line := 'Lost';
   if key = 'Gold' then begin
     key := 'gold piece';
@@ -1074,7 +1149,6 @@ begin
   end;
   if value < 0 then value := -value;
   line := line + ' ' + Indefinite(key, value);
-  {$IFDEF LOGGING}
   Log(line);
   {$ENDIF}
 end;
@@ -1276,8 +1350,14 @@ begin
     Put(Stats,'HP Max',Random(8) + CON.Tag div 6);
     Put(Stats,'MP Max',Random(8) + INT.Tag div 6);
     Put(Equips,'Weapon','Sharp Stick');
-    Put(Inventory,'Gold',0);
-    InventoryLabelAlsoGameStyle.Tag := 3;//GameStyle.Position;
+    InventoryBack_Gold := 0;
+    if InventoryBack = nil then begin
+      InventoryBack := TInventoryBack.Create;
+    end else begin
+      InventoryBack.Clear;
+    end;
+    InventoryUpd;
+    InventoryLabelAlsoGameStyle.Tag := 3; //GameStyle.Position;
     GoButtonClick(NewGuyForm);
   end;
 end;
@@ -1379,7 +1459,8 @@ begin
   WinItem;
   WinSpell;
   WinStat;
-  Add(Inventory,'Gold',Random(100));
+  AddInventory('gold',Random(100));
+  Inventory.Items.Count := InventoryBack.Count + 1;
   {$ENDIF}
 end;
 
@@ -1460,11 +1541,14 @@ begin
 
   Save.Inventory_Tag := Inventory.Tag;
   Save.Inventory_Hint := Inventory.Hint;
+  Save.Inventory_Items_Captions.Add('Gold');
+  Save.Inventory_Items_Subitems.Add(IntToStr(InventoryBack_Gold));
 
-  with Inventory do for i := 0 to Items.Count-1 do begin
-    Save.Inventory_Items_Captions.Add(Items[i].Caption);
-    Save.Inventory_Items_SubItems.Add(Items[i].Subitems[0]);
-  end;
+  if InventoryBack.Count > 0 then with InventoryBack do
+    for i := 0 to Count-1 do begin
+      Save.Inventory_Items_Captions.Add(Items_s(i));
+      Save.Inventory_Items_SubItems.Add(IntToStr(Items_i(i)));
+    end;
 
   Save.EncumBar_Hint := EncumBar.Hint;
   Save.EncumBar_Min := EncumBar.Min;
@@ -1499,7 +1583,6 @@ begin
   zm := TMemoryStream.Create;
   m.Position := 0;
   Zlib(m, zm);
-  zm.Position := 0;
 
   if FMakeBackups then try
     if FileExists(GameSaveName) then
@@ -1512,6 +1595,9 @@ begin
 
   try
     f := TFileStream.Create(ChangeFileExt(GameSaveName, '.lpq'), fmCreate);
+    zm.Position := 0;
+    f.Position := 0;
+    f.CopyFrom(zm, zm.Size);
   except
     on EfCreateError do begin
       Result := false;
@@ -1519,8 +1605,6 @@ begin
     end;
   end;
 
-  f.Position := 0;
-  f.CopyFrom(zm, zm.Size);
   m.Free; zm.Free; f.Free;
 
   Save.Destroy;
@@ -1554,7 +1638,13 @@ begin
   Equips.Items.Clear;
   Spells.Items.Clear;
   Plots.Items.Clear;
-  Inventory.Items.Clear;
+
+  if InventoryBack = nil then begin
+    InventoryBack := TInventoryBack.Create;
+  end else begin
+    InventoryBack.Clear;
+  end;
+  InventoryUpd;
 
   Label1.Hint := Save.Label1_Hint;
 
@@ -1611,9 +1701,16 @@ begin
 
   Inventory.Tag := Save.Inventory_Tag;
   Inventory.Hint := Save.Inventory_Hint;
+  InventoryBack_Gold := 0;
+
   for i := 0 to Save.Inventory_Items_Captions.Count-1 do begin
-    Put(Inventory, Save.Inventory_Items_Captions[i], Save.Inventory_Items_SubItems[i]);
+    if CompareText(Save.Inventory_Items_Captions[i], 'Gold')=0 then begin
+      InventoryBack_Gold := StrToInt(Save.Inventory_Items_SubItems[i])
+    end else begin
+      InventoryBack.Add(Save.Inventory_Items_Captions[i], StrToInt(Save.Inventory_Items_SubItems[i]));
+    end;
   end;
+  InventoryUpd;
 
   EncumBar.Hint := Save.EncumBar_Hint;
   EncumBar.Min := Save.EncumBar_Min;

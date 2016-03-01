@@ -25,7 +25,7 @@ interface
 
 uses
   LCLIntf, LCLType, LMessages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, Menus, FileUtil, StreamZlib, Saves,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, Menus, LazFileUtils, StreamZlib, Saves,
   InventoryBack;
 
 const

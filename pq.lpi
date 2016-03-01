@@ -47,7 +47,6 @@
         <ComponentName Value="ConfigForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Config"/>
       </Unit1>
       <Unit2>
         <Filename Value="Front.pas"/>
@@ -55,7 +54,6 @@
         <ComponentName Value="FrontForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Front"/>
       </Unit2>
       <Unit3>
         <Filename Value="Main.pas"/>
@@ -63,7 +61,6 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Main"/>
       </Unit3>
       <Unit4>
         <Filename Value="NewGuy.pas"/>
@@ -71,7 +68,6 @@
         <ComponentName Value="NewGuyForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="NewGuy"/>
       </Unit4>
       <Unit5>
         <Filename Value="SelServ.pas"/>
@@ -79,12 +75,10 @@
         <ComponentName Value="ServerSelectForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="SelServ"/>
       </Unit5>
       <Unit6>
         <Filename Value="Web.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Web"/>
       </Unit6>
       <Unit7>
         <Filename Value="StreamZlib.pas"/>
@@ -93,7 +87,6 @@
       <Unit8>
         <Filename Value="Saves.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Saves"/>
       </Unit8>
     </Units>
   </ProjectOptions>
@@ -109,6 +102,8 @@
       </SyntaxOptions>
     </Parsing>
     <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+      <RelocatableUnit Value="True"/>
       <Checks>
         <IOChecks Value="True"/>
         <RangeChecks Value="True"/>
@@ -117,26 +112,23 @@
       </Checks>
       <VerifyObjMethodCallValidity Value="True"/>
       <Optimizations>
-        <OptimizationLevel Value="0"/>
+        <OptimizationLevel Value="3"/>
       </Optimizations>
     </CodeGeneration>
     <Linking>
       <Debugging>
-        <UseHeaptrc Value="True"/>
-        <TrashVariables Value="True"/>
+        <GenerateDebugInfo Value="False"/>
         <UseValgrind Value="True"/>
-        <GenGProfCode Value="True"/>
+        <StripSymbols Value="True"/>
         <UseExternalDbgSyms Value="True"/>
       </Debugging>
+      <LinkSmart Value="True"/>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

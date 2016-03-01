@@ -1,7 +1,7 @@
 object MainForm: TMainForm
-  Left = 950
+  Left = 864
   Height = 670
-  Top = 245
+  Top = 261
   Width = 966
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
@@ -90,7 +90,7 @@ object MainForm: TMainForm
   OnShow = FormShow
   OnWindowStateChange = OnMainFormWindowStateChange
   Position = poScreenCenter
-  LCLVersion = '1.4.0.4'
+  LCLVersion = '1.6.0.4'
   object Panel4: TPanel
     AnchorSideLeft.Control = Owner
     AnchorSideRight.Control = Owner

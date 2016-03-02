@@ -13,6 +13,8 @@ uses
   StreamZlib in 'StreamZlib.pas',
   Saves in 'Saves.pas';
 
+{$R *.res}
+
 begin
   Application.Initialize;
   Application.Title := 'Progress Quest';
@@ -22,4 +24,4 @@ begin
   Application.CreateForm(TNewGuyForm, NewGuyForm);
   Application.CreateForm(TServerSelectForm, ServerSelectForm);
   Application.Run;
-end.
+end.

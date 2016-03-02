@@ -13,6 +13,7 @@
       <Title Value="pq"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
+      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -129,6 +130,18 @@
         </Win32>
       </Options>
     </Linking>
+    <Other>
+      <Verbosity>
+        <ShoLineNum Value="True"/>
+        <ShowAll Value="True"/>
+        <ShowDebugInfo Value="True"/>
+        <ShowUsedFiles Value="True"/>
+        <ShowTriedFiles Value="True"/>
+        <ShowCompProc Value="True"/>
+        <ShowCond Value="True"/>
+        <ShowExecInfo Value="True"/>
+      </Verbosity>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

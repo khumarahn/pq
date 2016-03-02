@@ -117,7 +117,6 @@ type
     procedure InventoryData(Sender: TObject; Item: TListItem);
   private
     AutoSized: boolean;
-    pWindowState: TWindowState;
     Save: TSave;
     procedure Task(caption: String; msec: Integer);
     procedure Dequeue;
@@ -724,17 +723,14 @@ end;
 
 procedure TMainForm.OnMainFormWindowStateChange(Sender: TObject);
 begin
-  // wierd bug with gtk have to check prev state
-  if (WindowState = wsMinimized) and (pWindowState <> wsMinimized) then begin
+  if (WindowState = wsMinimized) then begin
+    Hide;
+    ShowInTaskBar := stNever;
     TrayIcon1.Hint := 'Progress Quest'
       + ' - ' + Get(Traits,'Name')
       + ' - Level ' + Get(Traits,'Level');
     TrayIcon1.Show;
-    Hide;
-    ShowInTaskBar := stNever;
-    pWindowState := wsMinimized;
   end;
-  pWindowState := WindowState;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
@@ -809,7 +805,7 @@ end;
 
 procedure TMainForm.OnClickTrayIcon1(Sender: TObject);
 begin
-  if WindowState <> wsNormal then WindowState := wsNormal;
+  WindowState := wsNormal;
   Show;
   ShowInTaskBar := stDefault;
   TrayIcon1.Hide;

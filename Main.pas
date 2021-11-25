@@ -112,6 +112,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure HideToTray;
     procedure UnselectListItem(Sender: TObject; Item: TListItem);
     procedure TriggerAutoSizes;
     procedure InventoryData(Sender: TObject; Item: TListItem);
@@ -721,15 +722,20 @@ begin
   Brag('s');
 end;
 
+procedure TMainForm.HideToTray;
+begin
+  Hide;
+  ShowInTaskBar := stNever;
+  TrayIcon1.Hint := 'Progress Quest'
+    + ' - ' + Get(Traits,'Name')
+    + ' - Level ' + Get(Traits,'Level');
+  TrayIcon1.Show;
+end;
+
 procedure TMainForm.OnMainFormWindowStateChange(Sender: TObject);
 begin
   if (WindowState = wsMinimized) then begin
-    Hide;
-    ShowInTaskBar := stNever;
-    TrayIcon1.Hint := 'Progress Quest'
-      + ' - ' + Get(Traits,'Name')
-      + ' - Level ' + Get(Traits,'Level');
-    TrayIcon1.Show;
+    HideToTray;
   end;
 end;
 
@@ -1775,6 +1781,9 @@ end;
 procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+  if (ssCtrl in Shift) and (Key = ord('H')) then begin
+    HideToTray;
+  end;
   if (ssCtrl in Shift) and (ssShift in Shift) and (Key = ord('C')) then begin
     {$IFDEF CHEATS}
     Cheats.Visible := not Cheats.Visible;

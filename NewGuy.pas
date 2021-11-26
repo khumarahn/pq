@@ -8,9 +8,10 @@ interface
 
 uses
   LCLIntf, LCLType, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls;
+  Dialogs, StdCtrls, ExtCtrls, Generics.Collections;
 
 type
+  TSeedStack = TStack<Cardinal>;
   TNewGuyForm = class(TForm)
     Race: TRadioGroup;
     Klass: TRadioGroup;
@@ -33,7 +34,6 @@ type
     Sold: TButton;
     Unroll: TButton;
     Name: TLabeledEdit;
-    OldRolls: TListBox;
     Button2: TButton;
     //PoorCodeDesign: TNMURL;
     Account: TLabeledEdit;
@@ -49,6 +49,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
+    OldRolls: TSeedStack;
     procedure RollEm;
     function GetAccount: String;
     function GetPassword: String;
@@ -107,7 +108,7 @@ end;
 
 procedure TNewGuyForm.RerollClick(Sender: TObject);
 begin
-  OldRolls.Items.Insert(0, IntToStr(ReRoll.Tag));
+  OldRolls.Push(ReRoll.Tag);
   Unroll.Enabled := true;
   RollEm;
 end;
@@ -136,9 +137,8 @@ end;
 
 procedure TNewGuyForm.UnrollClick(Sender: TObject);
 begin
-  RandSeed := StrToInt(OldRolls.Items[0]);
-  OldRolls.Items.Delete(0);
-  Unroll.Enabled := OldRolls.Items.Count > 0;
+  RandSeed := OldRolls.Pop;
+  Unroll.Enabled := OldRolls.Count > 0;
   RollEm;
 end;
 
@@ -260,6 +260,7 @@ begin
   Klass.Items.Clear;
   for i := 0 to K.Klasses.Lines.Count-1 do
     Klass.Items.Add(Split(K.Klasses.Lines[i],0));
+  OldRolls := TSeedStack.Create;
 end;
 
 end.

@@ -274,17 +274,6 @@ object NewGuyForm: TNewGuyForm
     MaxLength = 30
     TabOrder = 4
   end
-  object OldRolls: TListBox
-    Left = 396
-    Height = 13
-    Top = 228
-    Width = 21
-    ItemHeight = 0
-    ScrollWidth = 19
-    TabOrder = 5
-    TopIndex = -1
-    Visible = False
-  end
   object Button2: TButton
     Left = 426
     Height = 25
